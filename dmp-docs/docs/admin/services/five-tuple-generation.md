@@ -26,16 +26,28 @@ After creating a product, you can generate a **five-tuple** in the product detai
 ### Generate Five-Tuples
 
 1. Click **Continue Development** for the target product
-2. Click the sub-tab **[Mass Production]**
-3. Select **Generate Authorization Code**
-4. Enter the number of authorization codes to be produced
-5. Add batch remarks
-6. Click **Confirm**
-7. Wait for the five-tuples to be generated
+
+![Continue Development](/img/admin/continue-development.png)
+
+2. Click the sub-tab **[Mass Production]** and select **Generate Authorization Code**
+
+![Generate Auth Code](/img/admin/generate-auth-code.png)
+
+3. Enter the number of authorization codes to be produced
+
+![Confirm Dialog](/img/admin/confirm-dialog.png)
+
+4. Add batch remarks and click **Confirm**
+5. Wait for the five-tuples to be generated
+
+![Exported File](/img/admin/exported-file.png)
 
 ### Export Five-Tuples
 
 1. Click **Export Authorization Code**
+
+![Export Auth Code](/img/admin/export-auth-code.png)
+
 2. Download the generated five-tuple file (usually CSV or Excel format)
 3. Provide the file to the factory for device burning
 

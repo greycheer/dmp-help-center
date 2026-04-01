@@ -28,10 +28,18 @@ Before creating a new App, please prepare the following information:
 **Navigation Path:** [APP] → [APP Management]
 
 1. Click **Add APP**
+
+![Add APP Page](/img/admin/add-app-page.png)
+
 2. Fill in the prepared information in the pop-up window
+
+![Fill APP Info](/img/admin/fill-app-info.png)
+
 3. Click **Confirm**
 
 After creating the APP, an **APP Bound** will be generated automatically. Please provide this to the APP developer for APP packing.
+
+![APP Bundle Info](/img/admin/app-bundle-info.png)
 
 ## APP Configuration
 
@@ -40,6 +48,8 @@ After creating the APP, an **APP Bound** will be generated automatically. Please
 ### Configuration Items
 
 Enter the page and click **Modify** to configure:
+
+![APP Config Modify](/img/admin/app-config-modify.png)
 
 | Setting | Description | Options |
 |---------|-------------|---------|

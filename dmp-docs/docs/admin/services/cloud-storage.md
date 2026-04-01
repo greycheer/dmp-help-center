@@ -24,11 +24,17 @@ The cloud storage plan configuration process consists of four steps:
 ### Create Template
 
 1. Click **Create Template**
+
+![Cloud Storage Templates](/img/admin/cloud-storage-templates.png)
+
 2. Define basic template information:
    - Template name
    - Storage duration (e.g., 7 days, 30 days)
    - Cloud service provider
    - Storage specifications
+
+![Create Template](/img/admin/create-template.png)
+
 3. Save the template
 
 ## Step 2: Define Cloud Storage Products
@@ -38,16 +44,15 @@ The cloud storage plan configuration process consists of four steps:
 ### Create Product
 
 1. Click **Create Product**
+
+![Create Product](/img/admin/create-product.png)
+
 2. Select a template as the base
-3. Define pricing:
-   - Currency
-   - Price
-   - Discounts (if applicable)
-4. Set purchase restrictions:
-   - Minimum/maximum purchase quantity
-   - Validity period
-   - Applicable device types
-5. Save the product
+3. Define pricing and details
+
+![Product Details](/img/admin/product-details.png)
+
+4. Save the product
 
 ## Step 3: Define Product Groups
 
@@ -56,9 +61,14 @@ The cloud storage plan configuration process consists of four steps:
 ### Create Product Group
 
 1. Click **Create Group**
-2. Enter group name
-3. Associate multiple products for batch management
-4. Save the group
+
+![Product Grouping](/img/admin/product-grouping.png)
+
+2. Enter group name and associate multiple products
+
+![Product Group Add](/img/admin/product-group-add.png)
+
+3. Save the group
 
 ## Step 4: Configure Product Shelves
 
@@ -67,11 +77,10 @@ The cloud storage plan configuration process consists of four steps:
 ### Publish Products
 
 1. Select **Product Group**
-2. Configure shelf placement:
-   - Target App
-   - Display order
-   - Visibility settings
-3. Complete publishing
+
+![Product Shelves](/img/admin/product-shelves.png)
+
+2. Configure shelf placement and complete publishing
 
 ## Next Steps
 

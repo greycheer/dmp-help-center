@@ -19,8 +19,13 @@ Subsequently, corresponding standard function libraries and configuration templa
 ### Create Category
 
 1. On the Backend Categories page, select **New Sub Item** or **Add A First Level Category** according to the level you want to manage
+
+![Backend Categories](/img/admin/backend-categories.png)
+
 2. Enter the category name and other required information
 3. Specify whether the category is a **leaf node**
+
+![Leaf Category Config](/img/admin/leaf-category-config.png)
 
 **Important Notes:**
 
@@ -57,9 +62,14 @@ Frontend categories correspond to the product list displayed on the App provisio
 To display a product in the App:
 
 1. Create a corresponding leaf category based on the product definition
+
+![Frontend Categories](/img/admin/frontend-categories.png)
+
 2. Generally, create required categories by clicking **Add Sub Item** under existing categories
 3. The leaf category name must **exactly match** the product model name
 4. Configure the provisioning wizard according to the product definition
+
+![Configure Wizard](/img/admin/configure-wizard.png)
 
 Changes made here take effect immediately and do not require withdrawing the product release.
 
