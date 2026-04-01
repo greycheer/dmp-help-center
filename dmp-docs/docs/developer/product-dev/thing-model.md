@@ -37,9 +37,9 @@ Device-executable commands with input and output parameters.
 
 | Action | Input | Output | Description |
 |--------|-------|--------|-------------|
-| Set Fan Speed | {"speed": 3} | {"result": "success"} | Set AC fan speed level |
-| Take Photo | {} | {"url": "..."} | Trigger camera capture |
-| Reset Device | {"type": "soft"} | {"result": "success"} | Reset to factory settings |
+| Set Fan Speed | `{"speed": 3}` | `{"result": "success"}` | Set AC fan speed level |
+| Take Photo | `{}` | `{"url": "..."}` | Trigger camera capture |
+| Reset Device | `{"type": "soft"}` | `{"result": "success"}` | Reset to factory settings |
 
 **Example Definition:**
 ```json
@@ -58,10 +58,10 @@ Device-initiated notifications when certain conditions occur.
 
 | Event | Parameters | Description |
 |-------|------------|-------------|
-| Low Battery | {"level": 15} | Battery level below threshold |
-| Filter Replace Alert | {"days": 30} | Air filter needs replacement |
-| Motion Detected | {"zone": "entrance"} | PIR sensor triggered |
-| Door Opened | {"timestamp": 1234567890} | Door sensor triggered |
+| Low Battery | `{"level": 15}` | Battery level below threshold |
+| Filter Replace Alert | `{"days": 30}` | Air filter needs replacement |
+| Motion Detected | `{"zone": "entrance"}` | PIR sensor triggered |
+| Door Opened | `{"timestamp": 1234567890}` | Door sensor triggered |
 
 **Example Definition:**
 ```json
