@@ -33,7 +33,13 @@ Upon platform delivery, an initial administrator account is provided, along with
 ### Steps:
 
 1. Enter the account configuration page and click **Add Account**
+
+![Account Management Page](/img/admin/account-management.png)
+
 2. Enter the account information, select the assigned role(s) (multiple selections allowed)
+
+![Add Account Form](/img/admin/add-account-form.png)
+
 3. Click **Confirm** to create the account
 
 **Note:** Email, phone number, and password can be modified by the user after logging in.
@@ -51,9 +57,14 @@ Account information can be managed on this page using the **Edit**, **Reset Pass
 ### Create New Role
 
 1. Enter the role configuration page and click **New Role**
-2. Enter the role name
-3. Select the corresponding pages and functions based on the role definition
-4. Save the role
+
+![Role Management Page](/img/admin/role-management.png)
+
+2. Enter the role name and select the corresponding pages and functions based on the role definition
+
+![New Role Form](/img/admin/new-role-form.png)
+
+3. Save the role
 
 ### Role Management
 

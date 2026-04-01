@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# Feishu Image Downloader Script
+# This script downloads images from Feishu document blocks
+
+DOC_TOKEN="KAwYwIzlriHW4fkoImJcO4eMnJe"
+OUTPUT_DIR="/root/.openclaw/workspace/dmp-docs/dmp-docs/static/img/admin"
+
+# Image tokens extracted from the document
+# Format: "token|description|filename"
+declare -a IMAGES=(
+  "EiDCbE9dQo6E2DxInrBcxtIbn5g|Account Management Page|account-management.png"
+  "B2AXbfkxjolPO8xvCLTczj6Lnif|Add Account Form|add-account-form.png"
+  "XgOVbTdXHoCcRRxpZevccP4rnfg|Role Management Page|role-management.png"
+  "FIpub4t0yodexnxviUvcsTXMnUn|New Role Form|new-role-form.png"
+  "JmVkbAP4WovTtdxjIotc5h6Infe|Category Selection|category-selection.png"
+  "JEjRbLE5woNBn6x8oTycFN4tnvc|Backend Categories|backend-categories.png"
+  "E8N2bnQpVoKpfjxwL81czzE3nEA|Leaf Category Config|leaf-category-config.png"
+  "FHd1boz3ToNL3YxEnjfczFA3nwd|Create Function|create-function.png"
+  "B7H0b2JmGomSEtxRP4Vc9KqQnRc|Associated Products|associated-products.png"
+  "YTKmbiiLAo3h5VxUqxjcoIpfnja|Continue Development|continue-development.png"
+  "XdOHb5azcosn5KxqpRdc1rNPnFf|Generate Auth Code|generate-auth-code.png"
+  "SRH9b64GZozR7dxHCwAcryavnnb|Confirm Dialog|confirm-dialog.png"
+  "EFv7bSkB3obYCxx7mL9c6vAOn0y|Export Auth Code|export-auth-code.png"
+  "HZKgbYOYmoSk4LxsKtfcYgwAnNo|Exported File|exported-file.png"
+  "FkyPbIXuSohEOax61hmckSjGnbd|Add APP Page|add-app-page.png"
+  "X7vNbcfeto7pe5xPZzqcU42Gnbf|Fill APP Info|fill-app-info.png"
+  "JiHabI5ksoUHUMxOTExcRQkjn9g|APP Bundle Info|app-bundle-info.png"
+  "UlhDbFzfboMofgx7mazcbvUUnQ3|APP Config Modify|app-config-modify.png"
+  "WSR0bU5grosZGVxMAx9cWQ1ynrc|Android Push Cert|android-push-cert.png"
+  "WEXPbO2bWo7qkfxjqNwcEEDOnah|iOS Push Cert|ios-push-cert.png"
+  "LUHAbezO1oD8d5x25QWcYbrZnI8|Publishing Config|publishing-config.png"
+  "MxtGboyfhogXnpxBSuAcs7jWnpf|Select App Dropdown|select-app-dropdown.png"
+  "LNARbnXNjoqa7Uxz4gQcx2f1nad|Add Agreement Version|add-agreement-version.png"
+  "Gf3wbdIlLoAod0xp2ajcHh3Mn2f|Edit Agreement Content|edit-agreement-content.png"
+  "GWpSbgHQIo6g7Wx0ekpcdJeonhf|Enable Agreement|enable-agreement.png"
+  "DRtxb6e6GoXNXzxIaHRcNFHDn5b|Bluetooth Provisioning|bluetooth-provisioning.png"
+  "UfU8bzi3VoDMXKxfZmtc3OUUnFb|Scan QR Code|scan-qr-code.png"
+  "QI59bNW2aopLc5xA9O1ckde2noh|Select Device Model|select-device-model.png"
+  "YUqQbvcApoZ2XfxIGN5cBbqMnAe|Provisioning Guide|provisioning-guide.png"
+  "DFxrbmFmkoiXjMx2G7fcGefvncg|Wizard Config|wizard-config.png"
+  "EcsXbCVvKolUd2xv9bicPd9QnXe|Frontend Categories|frontend-categories.png"
+  "KCCybdINMoiTccxVYfFcS25mnhf|Configure Wizard|configure-wizard.png"
+  "BmmhbmOt3oj0T1xvOBlcE1Agnwc|Cloud Storage Example|cloud-storage-example.png"
+  "MWu6bnUkdowbtwxH3iScBFzJnuh|Cloud Storage Templates|cloud-storage-templates.png"
+  "CREobmdFGofISGxkJZScyC7sn0c|Create Template|create-template.png"
+  "Qexbb03RGoQ0djxhPJRcRp3rnre|Create Product|create-product.png"
+  "ECewbg3sCobPvlxVmTwcxV2qnrf|Product Details|product-details.png"
+  "IRjRbZrgzo6fDwx2tp3cwBdJn7e|Product Grouping|product-grouping.png"
+  "GEy7bsZeuo7koFxkQlocKcoJnLg|Product Group Add|product-group-add.png"
+  "Iyq2bOsQsozwP7xSUKScn4RgnRe|Product Shelves|product-shelves.png"
+  "DLJhb8tc2oPfjlxUbp5cj1bwncg|App Knowledge Base|app-knowledge-base.png"
+  "LA6ybKq6Mor8fPxEAo7c3Sh3nof|App Knowledge Base 2|app-knowledge-base-2.png"
+  "VHU7bDICaoHoSHxLDibc8c6Tnbd|Device Knowledge Base|device-knowledge-base.png"
+  "Zd3ZbvJK0omq9NxACmdcoqKCnEf|Device Knowledge Base 2|device-knowledge-base-2.png"
+  "Q0iebcBAhoHvVDx9RjqcXB4znhh|Device Knowledge Base 3|device-knowledge-base-3.png"
+  "LGsKb1X96oYZnsxXnKgcUzm5nOb|Create Knowledge Base|create-knowledge-base.png"
+  "DdrUb07lhoHbrhxzREjcpDsHnuh|Create Knowledge Base 2|create-knowledge-base-2.png"
+  "CCbfbqn0foZe8vxeKoucifuwnnf|Add First Level Category|add-first-level-category.png"
+  "PxlobqEPUop0eWxCdtrcJ6Ngnyd|Add First Level Category 2|add-first-level-category-2.png"
+  "NEPUbenCAooCfPxmoztc1LDfnjg|Create Subcategory|create-subcategory.png"
+  "MrThbxGDVo1dH4xAYiwcBS38n9c|Create Knowledge Article|create-knowledge-article.png"
+  "UiDQbkUhtocJPqxESTvcSLx8neh|Manage Knowledge Articles|manage-knowledge-articles.png"
+  "SNJbbu8AsoGu1ixZrEdcNjmunzh|Manage Knowledge Articles 2|manage-knowledge-articles-2.png"
+  "CYZEbc8G5oAJZIxG5yzcSlvRnCv|After-sales Management|after-sales-management.png"
+  "NGNVbK10xo9qaKxyBUlcDOONnic|Create Push Notification|create-push-notification.png"
+  "TCjmbcd1MogyrAx0dC4c7JP0nwd|Create Push 2|create-push-2.png"
+  "PQx4blFr0oDirrx5N9Ec6ncGngK|Create Push 3|create-push-3.png"
+  "FsA2b24pyo8CYXx8Q9YcQnkendh|Create Push 4|create-push-4.png"
+  "IJlFbYXgcocqVkxGjxicc49bnK9|Push Review|push-review.png"
+  "MDJMb125Do7XkcxtOu9cOhman1e|Target Audience|target-audience.png"
+  "RIQmbcRicoEYA3xGPrscVNblnFg|Create Audience|create-audience.png"
+  "RcDZb5AdEopBUDxlIGJcEbtDntg|Edit Audience|edit-audience.png"
+  "Nnr9bUJJKoyhf3xUToAcjk9cnVd|Order Management|order-management.png"
+  "W37Db51sbojU7XxnR3EcgQ6Un0b|Unsubscribe Dialog|unsubscribe-dialog.png"
+  "CVMWb1p8moQR75xda0pcKt03nog|Refund Method|refund-method.png"
+)
+
+echo "Starting image download..."
+echo "Output directory: $OUTPUT_DIR"
+echo ""
+
+for img_info in "${IMAGES[@]}"; do
+  IFS='|' read -r token desc filename <<< "$img_info"
+  
+  echo "Processing: $desc ($filename)"
+  echo "  Token: $token"
+  
+  # Note: Feishu requires special API calls to get download URLs for document images
+  # This script documents the image tokens for manual download or future API implementation
+  echo "  Status: Needs manual download from Feishu document"
+  echo ""
+done
+
+echo "Image list created. Total images: ${#IMAGES[@]}"
