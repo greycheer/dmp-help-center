@@ -393,7 +393,6 @@ Among these, Bluetooth direct provisioning does not require configuration in the
 
 The latter two methods require configuring the provisioning guide in the DMP console (as shown below). The following section explains how to configure the second and third methods.
 
-![Provisioning Guide](/img/docs/YUqQbvcApoZ2XfxIGN5cBbqMnAe.png)
 
 ##### 2.3.4.2 Operation Manual
 
@@ -595,15 +594,12 @@ On the Product Knowledge Base page, click **Edit** to manage the corresponding k
 
 **Target Audience Management**
 
-![Audience List](/img/docs/MDJMb125Do7XkcxtOu9cOhman1e.png)
 
 **Create Audience**
 
-![Create Audience](/img/docs/RIQmbcRicoEYA3xGPrscVNblnFg.png)
 
 **Edit Audience**
 
-![Edit Audience](/img/docs/RcDZb5AdEopBUDxlIGJcEbtDntg.png)
 
 #### 2.4.4 Cloud Storage Order Management
 
