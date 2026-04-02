@@ -21,15 +21,7 @@ The DMP platform is a comprehensive platform serving hardware manufacturers with
 
 Before starting, understand the following core concepts:
 
-| Terminology | Explanation | Example |
-|-------------|-------------|---------|
-| Category | In IoT platforms, refers to a collection of devices with identical functional definitions or application scenarios, serving as templates for product definitions | "Smart Bulb" defining common attributes like switch status/brightness |
-| Product | Specific device models or series developed based on a Category. Each product has a unique Product ID (PID) | A developer creates the "CS-6-AD1080W-A0" camera product under the "Smart Camera" category |
-| Five-Tuple | Unique device credentials containing: Product ID, Device UUID, Device Secret, QR Code string, NGW Domain | Device authentication information used during device activation |
-| Standard Function | Pre-defined common functions provided by the platform for each product category, serving as a "standard library" | "Switch", "Brightness Adjustment" functions in lighting category |
-| Firmware | Software embedded in hardware devices, upgradable via OTA | Camera firmware version v2.1.3 |
-| OTA | Over-The-Air technology for remote firmware upgrades | Updating device firmware through cloud push |
-| APP Bound | Unique identifier binding the APP to the platform | Used during APP packaging and configuration |
+> 📊 **Table Content** - Please refer to Feishu original document for Terminology table
 
 ### 1.4 Quick Guide
 
@@ -638,9 +630,4 @@ Click Confirm to unbind the devices.
 
 ### 3.1 History
 
-| Version | Date | Author | Description |
-|---------|------|--------|-------------|
-| v1.0.0 | 2024-01-15 | Platform Team | Initial release of Admin Manual |
-| v1.1.0 | 2024-03-20 | Platform Team | Added Cloud Storage Order Management section |
-| v1.2.0 | 2024-06-10 | Platform Team | Updated Device Management with batch unbind feature |
-| v1.3.0 | 2024-09-05 | Platform Team | Added Knowledge Base configuration guide |
+> 📊 **Table Content** - Please refer to Feishu original document for History table
