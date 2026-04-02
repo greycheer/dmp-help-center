@@ -59,9 +59,17 @@ The DMP platform does not support self-service account creation. Please provide 
 
 ### 2.1 Product Development
 
-Device development is a core process within product development. It allows developers to flexibly define product capabilities and manage product firmware.
+Device development is a core process within product development
 
-Developers can navigate to **Product → Product Development**, click **Continue Development** for a specific product to enter the product details page, and then select the **Device Development** subpage to perform related configurations.
+![Product Development](/img/docs/dev-product-dev-01.png)
+
+. It allows developers to flexibly define product capabilities and manage product firmware.
+
+Developers can navigate to **Product → Product Development**
+
+![Navigate to Product Development](/img/docs/dev-product-dev-02.png)
+
+, click **Continue Development** for a specific product to enter the product details page, and then select the **Device Development** subpage to perform related configurations.
 
 
 
@@ -69,24 +77,46 @@ Developers can navigate to **Product → Product Development**, click **Continue
 
 **Product Firmware Management** is used to manage OTA firmware for the product.
 
-Developers can associate an existing firmware repository with the product. Each product can be linked to **only one firmware repository**, and **only firmware versions maintained in that repository** can be used for OTA upgrades of the product.
+Developers can associate an existing firmware repository with the product
+
+![Associate Firmware Repository](/img/docs/dev-firmware-01.png)
+
+. Each product can be linked to **only one firmware repository**, and **only firmware versions maintained in that repository** can be used for OTA upgrades of the product.
 
 
 **For creating a firmware repository, please refer to the Firmware Management section.**
 
-After a firmware repository is bound to a product, click the **Firmware Upgrade** button to enter the **[Firmware Upgrade]** page.
+After a firmware repository is bound to a product, click the **Firmware Upgrade** button
+
+![Firmware Upgrade Button](/img/docs/dev-firmware-02.png)
+
+ to enter the **[Firmware Upgrade]** page.
 
 
-Click **New Firmware Upgrade**, select a firmware version, and fill in the required upgrade information to create an upgrade task for the product.
+Click **New Firmware Upgrade**
+
+![New Firmware Upgrade](/img/docs/dev-firmware-03.png)
+
+![Select Firmware Version](/img/docs/dev-firmware-04.png)
+
+, select a firmware version, and fill in the required upgrade information to create an upgrade task for the product.
 
 
 
-Click **Verify** to enter the firmware upgrade task verification page.
+Click **Verify** to enter the firmware upgrade task verification page
+
+![Verify Button](/img/docs/dev-firmware-05.png)
+
+.
 
 
 **Due to the special nature of OTA functionality, developers must complete OTA verification before the upgrade task can be released to a large number of devices.**
 
-Click **Add by Device ID**, add the device UUIDs to be verified, keep the devices online, and log in to the App bound to those devices. You will then receive OTA upgrade prompts on the devices. Confirm the upgrade and observe the OTA process. On the firmware upgrade task verification page, you can monitor the upgrade status of the devices and resend the upgrade task if necessary.
+Click **Add by Device ID**
+
+![Add by Device ID](/img/docs/dev-firmware-06.png)
+
+, add the device UUIDs to be verified, keep the devices online, and log in to the App bound to those devices. You will then receive OTA upgrade prompts on the devices. Confirm the upgrade and observe the OTA process. On the firmware upgrade task verification page, you can monitor the upgrade status of the devices and resend the upgrade task if necessary.
 
 
 **In addition to verifying whether an OTA task has been executed successfully (i.e., whether the device's local firmware version has been updated to the specified version), developers are also required to fully validate the runtime behavior of the firmware on the device side.**
@@ -99,12 +129,20 @@ Device Interaction is used to manage interaction capabilities during consumer us
 - **Device Provisioning Configuration** (Configuration Introduction)
 - **Device Setting Configuration** (Functional Grouping)
 
-Developers can navigate to **Product → Product Development**, click **Continue Development** for a specific product to enter the product details page, and then select the **Device Interaction** subpage to perform configuration.
+Developers can navigate to **Product → Product Development**, click **Continue Development**
+
+![Device Interaction](/img/docs/dev-device-interaction-01.png)
+
+ for a specific product to enter the product details page, and then select the **Device Interaction** subpage to perform configuration.
 
 
 #### 2.2.1 Product Display
 
-Configure the product icon, product name, and product model that are exposed to consumers on the App/Web side.
+Configure the product icon, product name, and product model
+
+![Product Display](/img/docs/dev-product-display-01.png)
+
+ that are exposed to consumers on the App/Web side.
 
 
 #### 2.2.2 Functional Grouping
@@ -113,25 +151,47 @@ Functional Grouping are used to manage product settings on the App and CMS. Deve
 
 **When a product is created, the DMP platform initializes default function groups based on the product category. Developers can modify these defaults as needed.**
 
-Click **New Primary Group** to create a highest-level group. Click groups in the tree to create sub-items (i.e., lower-level groups).
+Click **New Primary Group** to create a highest-level group
+
+![New Primary Group](/img/docs/dev-function-group-01.png)
+
+![Group Tree](/img/docs/dev-function-group-02.png)
+
+. Click groups in the tree to create sub-items (i.e., lower-level groups).
 Each group supports editing of multilingual group names and descriptions.
 
 
 
-For categories **whose type is Group**, the selectable functions must be consistent with the functions selected under **Device Development → Product Functions**.
+For categories **whose type is Group**
+
+![Group Type](/img/docs/dev-function-group-03.png)
+
+![Select Functions](/img/docs/dev-function-group-04.png)
+
+, the selectable functions must be consistent with the functions selected under **Device Development → Product Functions**.
 
 
 
 **Groups whose type is Group Name do not support function configuration. They exist as system placeholders to maintain the tree structure and only allow name modification and adding sub-items.**
 
-For configured function items, developers can further adjust their display style and multilingual names/descriptions.
+For configured function items, developers can further adjust their display style
+
+![Adjust Display Style](/img/docs/dev-function-group-05.png)
+
+ and multilingual names/descriptions.
 
 
 Available display styles: **Smart Control**, **Read-Only Display**, **Custom Display**.
 
 The **Custom Display** mode is not yet available to developers and should not be selected. Multilingual names/descriptions control how the function is displayed and described on the App/CMS side.
 
-The App-side display effect generated by function group configuration is shown as follows.
+The App-side display effect generated by function group configuration is shown as follows
+
+![App Display Effect 1](/img/docs/dev-function-group-06.png)
+
+![App Display Effect 2](/img/docs/dev-function-group-07.png)
+
+.
 
 
 
@@ -139,18 +199,36 @@ The App-side display effect generated by function group configuration is shown a
 
 Firmware Management is used to maintain firmware information for all developer products. The platform provides a clear two-level structure—Firmware Repository → Firmware Package → Firmware Upgrade Task—to manage firmware effectively.
 
-Developers can navigate to **Product → Firmware Management** to perform configuration.
+Developers can navigate to **Product → Firmware Management**
+
+![Firmware Management](/img/docs/dev-firmware-mgmt-01.png)
+
+ to perform configuration.
 
 
-Click **New Firmware** and fill in the required information to create a new firmware repository.
+Click **New Firmware** and fill in the required information
+
+![New Firmware](/img/docs/dev-firmware-mgmt-02.png)
+
+ to create a new firmware repository.
 
 
 **Firmware upgrade timeout** defines the OTA waiting time. If the timeout is exceeded, the upgrade is considered failed. This value can be adjusted based on firmware package size and user experience.
 
-Click a **Firmware Key** in the firmware list to enter the firmware details page.
+Click a **Firmware Key** in the firmware list
+
+![Firmware Details](/img/docs/dev-firmware-mgmt-03.png)
+
+ to enter the firmware details page.
 
 
-Click **New Firmware Version**, fill in the required information, upload the firmware package, and save to complete firmware version creation.
+Click **New Firmware Version**
+
+![New Firmware Version](/img/docs/dev-firmware-mgmt-04.png)
+
+![Release Firmware](/img/docs/dev-firmware-mgmt-05.png)
+
+, fill in the required information, upload the firmware package, and save to complete firmware version creation.
 
 After creation, you must click **Release** to put the firmware version into a released state before it can be used to configure OTA upgrade tasks.
 
