@@ -1,7 +1,7 @@
 /**
  * Any CSS included here will be global. The classic template
  * bundles Infima by default. Infima is a CSS framework designed to
- * go well with Docusaurus.
+ * for content-driven websites.
  */
 
 /* You can override the default Infima variables here. */
@@ -27,4 +27,20 @@
   --ifm-color-primary-lighter: #bfdbfe;
   --ifm-color-primary-lightest: #dbeafe;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  display: table;
+}
+
+table th {
+  background-color: var(--ifm-color-primary);
+  color: white;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background-color: var(--ifm-table-stripe-background);
 }

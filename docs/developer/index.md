@@ -1,378 +1,260 @@
----
-sidebar_position: 2
-sidebar_label: Developer Manual
----
-
-# DMP Platform Developer Guide
+# DMP Platform Manual for Developer
 
 ## Introduction
 
 ### 1.1 Purpose of the Manual
 
-This manual is intended for IoT hardware developers and firmware engineers who are integrating devices with the DMP platform. It provides comprehensive guidance on device development, protocol implementation, firmware management, and debugging.
-
-The content covers device data model definition, communication protocol implementation, OTA firmware upgrades, and integration testing to ensure smooth device connectivity and operation.
+This manual is intended to provide developers using the DMP platform with a comprehensive and systematic operational guide. By reading this manual, developers can quickly understand the platform's core capabilities and complete the full development workflow, including product creation, product feature configuration, device interaction setup, hardware development, and device debugging.
 
 ### 1.2 Platform Overview
 
-The DMP platform provides a complete device management solution supporting multiple communication protocols including Wi-Fi, Zigbee, Bluetooth, and 4G. This manual focuses on the technical aspects of device integration from a developer's perspective.
-
-Key capabilities include:
-- Device data model definition (Thing Model)
-- Device-to-cloud communication protocols
-- Firmware development and OTA upgrades
-- Device debugging and diagnostics
+The DMP platform is a comprehensive platform serving hardware manufacturers with device management capabilities at its core. This manual highlights a series of capabilities for rapid hardware product access: supporting hardware products of different categories to connect via Wi-Fi, 4G, LAN, etc.; supporting custom configuration of product functions; supporting custom APP/large-screen interactive panels; and supporting flexible OTA and debugging capabilities.
 
 ### 1.3 Terminology Explanation
 
-Before starting development, understand the following core concepts:
+Before starting, understand the following core concepts:
 
-| Terminology | Explanation | Example |
-|-------------|-------------|---------|
-| Thing Model | Data model defining device capabilities, including properties, events, and actions | Smart Bulb with on/off, brightness, color temperature properties |
-| DP (Data Point) | Specific data field in the Thing Model representing a single property or function | DP 1 = Switch, DP 2 = Brightness Level |
-| TuyaLink | Protocol for direct device-to-cloud communication over MQTT | Device connecting via TuyaLink SDK |
-| Gateway Sub-device | Device connecting through a gateway rather than directly to cloud | Zigbee sensor connecting via Zigbee gateway |
-| PID (Product ID) | Unique identifier for a product model, burned into device during production | PID = "abcdefghijklmnop" |
-| Device UUID | Unique identifier for each device instance | UUID = "uuid1234567890abcdef" |
-| Device Secret | Authentication key paired with UUID for secure device connection | Secret = "secret1234567890abcdef" |
+| Term | Explanation |
+|------|-------------|
+| DMP | Device Management Platform - The comprehensive platform for managing IoT devices |
+| Five-Tuple | The unique identity credentials for device connection: productId, deviceUuid, deviceSecret, qrCode, ngwDomain, deviceCode |
+| PID | Product ID - The unique identifier of the product model |
+| OTA | Over-The-Air - Firmware upgrade capability |
+| DP | Data Point - A single functional attribute of a device |
+| Standard Function | Pre-defined common functions for product categories |
+| Thing Model | The definition of device capabilities including properties, events, and actions |
+| Properties | Describe the real-time operating status of a device (Bool, Value, String, Enum, etc.) |
+| Events | Describe specific events or alarms triggered by the device |
+| Actions | Describe executable capabilities or methods of the device |
+| Firmware Repository | Container for managing firmware versions |
+| Function Groups | Tree-structured configuration for App device settings |
 
-### 1.4 Quick Start
+### 1.4 Quick Guide to Access to DMP Platform
 
-If you are new to DMP platform development, follow this quick start path:
+- DMP Platform Domain: Please contact the platform team.
 
-1. **Understand the Platform** → Read Section 1.2 Platform Overview
-2. **Create a Product** → Follow Section 2.1 Product Creation
-3. **Define Data Model** → Follow Section 2.2 Thing Model Definition
-4. **Implement Communication** → Follow Section 2.3 Device Communication
-5. **Test Integration** → Follow Section 2.4 Device Debugging
+**Account and Permission Application**
 
-For specific integration scenarios:
-- **Wi-Fi Device Integration** → Section 3.1 Wi-Fi Device Development
-- **Zigbee Device Integration** → Section 3.2 Zigbee Device Development
-- **Firmware OTA** → Section 3.3 Firmware Management
+The DMP platform does not support self-service account creation. Please provide the below information to DMP Platform Admin to create an account:
 
-## Product Development
+**Company Info:**
+- Company Name
+- Company Address
+- Company Contact Person
+- Company Contact Details
 
-### 2.1 Product Creation
+**Personal Info:**
+- Account Nickname — Fill in according to customer requirements (in some ODM environments, account nicknames cannot include Chinese characters or Pinyin).
+- Verification Email — Used to receive verification codes. Note: In overseas ODM environments, domestic email domains (e.g., qq.com, 163.com, domestic corporate domains) are not allowed. Overseas domains such as Gmail are recommended.
 
-#### 2.1.1 Creating a New Product
+---
 
-To start device development, you must first create a product in the DMP platform:
+## Product Development on DMP Platform
 
-**Navigation Path:** [Product] – [Product Development] – [Create Product]
+### 2.1 Product Development
 
-**Required Information:**
-- Product Name: Display name for the product
-- Product Category: Select from predefined categories
-- Communication Protocol: Wi-Fi, Zigbee, Bluetooth, or 4G
-- Product Model: Internal model identifier
+Device development is a core process within product development. It allows developers to flexibly define product capabilities and manage product firmware.
 
-**Steps:**
-1. Click **Create Product**
-2. Select the appropriate **Product Category** (this determines available standard functions)
-3. Choose **Communication Type**
-4. Enter **Product Name** and **Model**
-5. Click **Confirm** to create
+Developers can navigate to **Product → Product Development**, click **Continue Development** for a specific product to enter the product details page, and then select the **Device Development** subpage to perform related configurations.
 
-#### 2.1.2 Product Status Management
+![Product Development](/img/docs/dev-product-dev.png)
 
-Products have the following status lifecycle:
+![Device Development](/img/docs/dev-device-dev.png)
 
-- **In Development**: Initial status, all configurations can be modified
-- **Pre-release**: Configuration locked, ready for testing
-- **Released**: Production ready, available for mass production
-- **Deprecated**: No longer supported, cannot create new devices
+#### 2.2.1 Product Firmware Management
 
-**Important:** Only products in "Released" status can be used for mass production and device activation.
+**Product Firmware Management** is used to manage OTA firmware for the product.
 
-### 2.2 Thing Model Definition
+- Developers can associate an existing firmware repository with the product. Each product can be linked to **only one firmware repository**, and **only firmware versions maintained in that repository** can be used for OTA upgrades of the product.
 
-#### 2.2.1 Understanding Thing Model
+  ![Firmware Repository](/img/docs/dev-firmware-repo.png)
 
-The Thing Model defines the complete capability set of a device, including:
+**For creating a firmware repository, please refer to the Firmware Management section.**
 
-**Properties**: Device state that can be read and/or written
-- Examples: Power switch, brightness level, temperature reading
-- Support data types: Boolean, Integer, Enum, Float, String, Date, Raw
+- After a firmware repository is bound to a product, click the **Firmware Upgrade** button to enter the **[Firmware Upgrade]** page.
 
-**Events**: Notifications sent from device to cloud
-- Examples: Fault alarm, low battery warning, motion detected
-- Can include multiple parameters
+  ![Firmware Upgrade](/img/docs/dev-firmware-upgrade.png)
 
-**Actions**: Commands sent from cloud to device
-- Examples: Reset device, take photo, start recording
-- Can have input parameters and output results
+- Click **New Firmware Upgrade**, select a firmware version, and fill in the required upgrade information to create an upgrade task for the product.
 
-#### 2.2.2 Using Standard Functions
+  ![New Upgrade](/img/docs/dev-new-upgrade.png)
 
-The platform provides **Standard Functions** for each product category:
+  ![Upgrade Form](/img/docs/dev-upgrade-form.png)
 
-**Advantages of Standard Functions:**
-- Pre-configured in APP, no additional APP development needed
-- Consistent user experience across products in same category
-- Continuously maintained and updated by platform
+- Click **Verify** to enter the firmware upgrade task verification page.
 
-**Types of Standard Functions:**
-- **Mandatory**: Must be implemented, cannot be removed
-- **Optional**: Can be added based on actual hardware capabilities
+  ![Verify Upgrade](/img/docs/dev-verify-upgrade.png)
 
-**Navigation Path:** [Product] – [Product Development] – [Thing Model] – [Standard Functions]
+:::caution
+Due to the special nature of OTA functionality, developers must complete OTA verification before the upgrade task can be released to a large number of devices.
+:::
 
-To add standard functions:
-1. Select **Standard Functions** tab
-2. Browse available functions for your category
-3. Click **Add** to include in your product
-4. Configure parameters as needed
+- Click **Add by Device ID**, add the device UUIDs to be verified, keep the devices online, and log in to the App bound to those devices. You will then receive OTA upgrade prompts on the devices. Confirm the upgrade and observe the OTA process. On the firmware upgrade task verification page, you can monitor the upgrade status of the devices and resend the upgrade task if necessary.
 
-#### 2.2.3 Creating Custom Functions
+  ![Add Device ID](/img/docs/dev-add-device-id.png)
 
-If standard functions don't meet your requirements, you can create custom functions:
+:::caution
+In addition to verifying whether an OTA task has been executed successfully (i.e., whether the device's local firmware version has been updated to the specified version), developers are also required to **fully validate the runtime behavior of the firmware on the device side**.
+:::
 
-**Navigation Path:** [Product] – [Product Development] – [Thing Model] – [Custom Functions]
+### 2.2 Device Interaction
 
-**For Properties:**
-- Define DP ID (avoid IDs starting with "1" - reserved for platform)
-- Set data type and value range
-- Configure read/write permissions
+Device Interaction is used to manage interaction capabilities during consumer usage via the App/Web, including:
 
-**For Events:**
-- Define event identifier
-- Add event parameters with data types
+- **Product Display** (device models and images)
+- **Device Provisioning Configuration** (Configuration Introduction)
+- **Device Setting Configuration** (Functional Grouping)
 
-**For Actions:**
-- Define action identifier
-- Configure input parameters
-- Define output parameters (if any)
+Developers can navigate to **Product → Product Development**, click **Continue Development** for a specific product to enter the product details page, and then select the **Device Interaction** subpage to perform configuration.
 
-### 2.3 Device Communication
+![Device Interaction](/img/docs/dev-device-interaction.png)
 
-#### 2.3.1 Communication Protocols
+#### 2.2.1 Product Display
 
-The DMP platform supports multiple communication protocols:
+Configure the product icon, product name, and product model that are exposed to consumers on the App/Web side.
 
-| Protocol | Description | Use Case |
-|----------|-------------|----------|
-| TuyaLink | MQTT-based direct connection | Wi-Fi, 4G devices |
-| Zigbee | Mesh network via gateway | Low-power sensors, switches |
-| Bluetooth | BLE direct or gateway | Portable devices, wearables |
+![Product Display](/img/docs/dev-product-display.png)
 
-#### 2.3.2 TuyaLink Protocol
+#### 2.2.2 Functional Grouping
 
-TuyaLink is the primary protocol for direct device-to-cloud communication.
+Functional Grouping are used to manage product settings on the App and CMS. Developers can flexibly configure tree-structured function groups to meet common configuration needs during consumer use.
 
-**Connection Process:**
-1. Device obtains five-tuple credentials (PID, UUID, Secret, etc.)
-2. Device establishes MQTT connection to cloud
-3. Device subscribes to command topics
-4. Device publishes property updates and events
-5. Device handles action commands from cloud
+**When a product is created, the DMP platform initializes default function groups based on the product category. Developers can modify these defaults as needed.**
 
-**MQTT Topics:**
-```
-// Device publishes property updates
-up/thing/{device_uuid}/properties
+- Click **New Primary Group** to create a highest-level group. Click groups in the tree to create sub-items (i.e., lower-level groups).
+  Each group supports editing of multilingual group names and descriptions.
 
-// Device subscribes to action commands
-down/thing/{device_uuid}/actions
+  ![New Primary Group](/img/docs/dev-new-primary-group.png)
 
-// Device publishes events
-up/thing/{device_uuid}/events
-```
+  ![Edit Group](/img/docs/dev-edit-group.png)
 
-**Message Format:**
-```json
-{
-  "msgId": "1234567890",
-  "time": 1234567890,
-  "data": {
-    "switch": true,
-    "brightness": 80
-  }
-}
-```
+- For categories **whose type is Group**, the selectable functions must be consistent with the functions selected under **Device Development → Product Functions**.
 
-#### 2.3.3 Device Authentication
+  ![Select Functions](/img/docs/dev-select-functions.png)
 
-Devices must authenticate using the five-tuple credentials:
+  ![Function List](/img/docs/dev-function-list.png)
 
-**Authentication Fields:**
-- productId (PID): Product identifier
-- deviceUuid: Unique device ID
-- deviceSecret: Device authentication key
-- authkey: Derived authentication key
+**Groups whose type is Group Name do not support function configuration. They exist as system placeholders to maintain the tree structure and only allow name modification and adding sub-items.**
 
-**Authentication Flow:**
-1. Device calculates authkey from UUID + Secret
-2. Device sends connection request with PID, UUID, authkey
-3. Cloud validates credentials
-4. Connection established on success
+- For configured function items, developers can further adjust their display style and multilingual names/descriptions.
 
-### 2.4 Device Debugging
+  Available display styles: **Smart Control**, **Read-Only Display**, **Custom Display**.
 
-#### 2.4.1 Device Simulator
+  The **Custom Display** mode is not yet available to developers and should not be selected. Multilingual names/descriptions control how the function is displayed and described on the App/CMS side.
 
-Use the Device Simulator for testing without physical hardware:
+  ![Display Style](/img/docs/dev-display-style.png)
 
-**Navigation Path:** [Product] – [Product Development] – [Device Debugging] – [Simulator]
+The App-side display effect generated by function group configuration is shown as follows.
 
-**Features:**
-- Simulate device connection and data reporting
-- Send commands to test action handling
-- View real-time communication logs
+![App Display 1](/img/docs/dev-app-display1.png)
 
-#### 2.4.2 Communication Logs
+![App Display 2](/img/docs/dev-app-display2.png)
 
-View detailed communication logs for debugging:
+### 2.3 Firmware Management
 
-**Navigation Path:** [Product] – [Product Development] – [Device Debugging] – [Logs]
+Firmware Management is used to maintain firmware information for all developer products. The platform provides a clear two-level structure—Firmware Repository → Firmware Package → Firmware Upgrade Task—to manage firmware effectively.
 
-**Log Types:**
-- Connection logs: Device connect/disconnect events
-- Property logs: Property updates from device
-- Command logs: Commands sent to device
-- Event logs: Events reported by device
+- Developers can navigate to **Product → Firmware Management** to perform configuration.
 
-#### 2.4.3 Online Debugging
+  ![Firmware Management](/img/docs/dev-firmware-management.png)
 
-For physical device debugging:
+- Click **New Firmware** and fill in the required information to create a new firmware repository.
 
-**Prerequisites:**
-1. Device connected to network
-2. Device activated on platform
-3. Device in "In Development" or "Pre-release" status
+  ![New Firmware](/img/docs/dev-new-firmware.png)
 
-**Debug Features:**
-- Real-time property monitoring
-- Send test commands
-- View device logs
-- Force refresh device status
+:::tip
+**Firmware upgrade timeout** defines the OTA waiting time. If the timeout is exceeded, the upgrade is considered failed. This value can be adjusted based on firmware package size and user experience.
+:::
 
-## Specific Development Scenarios
+- Click a **Firmware Key** in the firmware list to enter the firmware details page.
 
-### 3.1 Wi-Fi Device Development
+  ![Firmware Details](/img/docs/dev-firmware-details.png)
 
-#### 3.1.1 SDK Integration
+- Click **New Firmware Version**, fill in the required information, upload the firmware package, and save to complete firmware version creation.
 
-The DMP platform provides SDKs for Wi-Fi device development:
+  After creation, you must click **Release** to put the firmware version into a released state before it can be used to configure OTA upgrade tasks.
 
-**Available SDKs:**
-- Tuya IoT SDK for embedded Linux
-- Tuya IoT SDK for FreeRTOS
-- Tuya IoT SDK for Arduino
+  ![New Version](/img/docs/dev-new-version.png)
 
-**SDK Capabilities:**
-- Device provisioning (EZ mode, AP mode, QR code)
-- MQTT communication management
-- OTA firmware upgrade
-- Data model mapping
+  ![Release Version](/img/docs/dev-release-version.png)
 
-#### 3.1.2 Network Provisioning
+:::caution
+Firmware versions must be created strictly in version order. Even if an OTA task is delivered to a device, the device will only upgrade to a firmware version that is **higher than its current local version**.
+:::
 
-Wi-Fi devices support multiple provisioning methods:
+**For how to enable upgrades using maintained firmware versions, please refer to the <Product Firmware Management> section.**
 
-**EZ Mode (SmartConfig):**
-- APP broadcasts Wi-Fi credentials
-- Device sniffs packets to obtain SSID/password
-- One-step provisioning, user-friendly
-
-**AP Mode:**
-- Device creates AP hotspot
-- APP connects to device AP
-- APP sends Wi-Fi credentials
-- More reliable, requires mode switching
-
-**QR Code:**
-- Device scans QR code containing credentials
-- Suitable for devices with camera
-
-### 3.2 Zigbee Device Development
-
-#### 3.2.1 Zigbee Architecture
-
-Zigbee devices connect through a Zigbee gateway:
-
-```
-Zigbee Device ←→ Zigbee Gateway ←→ DMP Cloud ←→ APP
-```
-
-**Device Types:**
-- Router: Can route messages, always powered
-- End Device: Battery powered, sleeps to save power
-
-#### 3.2.2 Gateway Integration
-
-To integrate a Zigbee device:
-
-1. Pair device with gateway
-2. Gateway reports device to cloud
-3. Cloud creates device entity
-4. Device appears in APP
-
-### 3.3 Firmware Management
-
-#### 3.3.1 Firmware Repository
-
-Manage firmware versions in the platform:
-
-**Navigation Path:** [Product] – [Firmware Management] – [Firmware Repository]
-
-**Firmware Information:**
-- Version number (semantic versioning recommended)
-- Firmware file (binary)
-- Release notes
-- Compatibility information
-
-#### 3.3.2 OTA Upgrade Process
-
-OTA (Over-The-Air) upgrade workflow:
-
-1. **Upload Firmware**: Upload new firmware to repository
-2. **Create Upgrade Task**: Select target devices and firmware version
-3. **Push Notification**: Devices receive upgrade notification
-4. **Download Firmware**: Device downloads firmware package
-5. **Install Firmware**: Device installs and reboots
-6. **Verify Upgrade**: Cloud verifies new version
-
-#### 3.3.3 OTA Implementation
-
-Device-side OTA handling:
-
-**Receive OTA Notification:**
-```json
-{
-  "msgId": "ota_12345",
-  "time": 1234567890,
-  "data": {
-    "firmwareUrl": "https://...",
-    "firmwareVersion": "2.0.0",
-    "fileSize": 1024000,
-    "checksum": "md5_checksum"
-  }
-}
-```
-
-**OTA Steps:**
-1. Verify firmware package integrity
-2. Download firmware to temporary storage
-3. Verify checksum
-4. Apply firmware update
-5. Reboot device
-6. Report new version to cloud
+---
 
 ## Appendix
 
-### 3.1 History
+### 3.1 FAQ
 
-| Version | Date | Author | Description |
-|---------|------|--------|-------------|
-| v1.0.0 | 2024-01-10 | Platform Team | Initial release of Developer Guide |
-| v1.1.0 | 2024-04-15 | Platform Team | Added Zigbee device development section |
-| v1.2.0 | 2024-07-20 | Platform Team | Updated TuyaLink protocol documentation |
-| v1.3.0 | 2024-10-30 | Platform Team | Added OTA implementation details |
+**Frequently Asked Questions**
 
-### 3.2 Reference Documents
+**Q: I cannot find a suitable product category when creating a product under development.**
 
-- API Reference: https://developer.tuya.com/docs/iot
-- SDK Download: https://github.com/tuya/tuya-iotos-embeded-sdk
-- Community Forum: https://www.tuya.com/vo/community
+— Please contact the platform team for assistance.
+
+**Q: I cannot receive the email verification code when logging in.**
+
+— Some Chinese email providers may not receive verification emails reliably. Please try using an international email service such as Gmail.
+
+**Q: I cannot find appropriate product functions on the platform to match my hardware capabilities.**
+
+— Please prepare a detailed description of the required functions and contact the platform team to have them added.
+
+**Q: The debugging device cannot connect to the platform.**
+
+— Please ensure the device meets the platform access requirements and that authentication information such as the five-tuple has been correctly configured.
+
+**Q: Which provisioning Configurations should I configure during product development?**
+
+This depends on the network connectivity method of your product. We recommend the following:
+
+**Wi-Fi Products:**
+- Configure two Configuration: Bluetooth and Wi-Fi Configuration
+
+Priority:
+- Bluetooth add as the primary binding method
+- Wi-Fi configuration as a fallback option
+
+**4G Products:**
+- Configure four Configuration: Bluetooth, Scan the Device Body Code, Device Code Scanning and ID Addition
+
+Priority:
+- Bluetooth add as the primary binding method
+- Scan the device body code as the secondary option
+- ID addition and device code scanning as fallback options
+
+**LAN Products:**
+- Configure three Configuration: Scan the Device Body Code, LAN Scanning and ID Addition
+
+Priority:
+- Scan the device body code as the primary binding method
+- LAN scanning and ID addition as fallback options
+
+**Q: Why are some functions displayed in the App configuration page even though they are not set in Function Groups?**
+
+— Function Groups only control the configurable settings section in the App. Other sections such as product basic information, device reboot, device sharing, and device information are built-in App features.
+
+**Q: Why can't some functions configured in Function Groups be controlled in the App?**
+
+— Currently, the platform only supports App-side control of **Bool** and **Enum** type attribute functions. Other function types are display-only and show the latest device-reported values. Support for additional types will be gradually introduced in future versions.
+
+**Q: Why can't I select a certain firmware version when creating a firmware upgrade task?**
+
+— Please check whether the firmware version has already been associated with a previous upgrade task. The system strictly enforces that each firmware version can only be used once for an upgrade within a single product.
+
+**Q: I have completed OTA verification for a firmware upgrade task. How can I perform a batch OTA upgrade?**
+
+— Batch OTA functionality is not yet available to developers. Please contact the platform team and provide the created firmware upgrade task so that the platform team can assist with the operation.
+
+### 3.2 History
+
+| Version | Date | Updates |
+|---------|------|---------|
+| 1.0.0 | 2024-01-01 | Initial release of Developer Manual |
+| 1.1.0 | 2024-04-10 | Added FAQ section |
+| 1.2.0 | 2024-08-15 | Updated firmware management documentation |
+| 1.3.0 | 2025-01-01 | Major platform update with new UI |
