@@ -21,7 +21,15 @@ The DMP platform is a comprehensive platform serving hardware manufacturers with
 
 Before starting, understand the following core concepts:
 
-> 📊 *表格内容 - 请参考飞书原文档*
+| Terminology | Explanation | Example |
+|-------------|-------------|---------|
+| Category | In IoT platforms, refers to a collection of devices with identical functional definitions or application scenarios, serving as templates for product definitions | "Smart Bulb" defining common attributes like switch status/brightness |
+| Product | Specific device models or series developed based on a Category. Each product has a unique Product ID (PID) | A developer creates the "CS-6-AD1080W-A0" camera product under the "Smart Camera" category |
+| Five-Tuple | Unique device credentials containing: Product ID, Device UUID, Device Secret, QR Code string, NGW Domain | Device authentication information used during device activation |
+| Standard Function | Pre-defined common functions provided by the platform for each product category, serving as a "standard library" | "Switch", "Brightness Adjustment" functions in lighting category |
+| Firmware | Software embedded in hardware devices, upgradable via OTA | Camera firmware version v2.1.3 |
+| OTA | Over-The-Air technology for remote firmware upgrades | Updating device firmware through cloud push |
+| APP Bound | Unique identifier binding the APP to the platform | Used during APP packaging and configuration |
 
 ### 1.4 Quick Guide
 
@@ -308,7 +316,7 @@ Entry 2: On the [APP] – [Publishing Configuration] page, select the App from t
 (User Agreement and Privacy Policy are configured in the same way, but managed on separate pages.)
 
 **a. Create a version:**
-Click **Add Version**, enter the agreement version number, and click **Confirm**. Note: Once added, an agreement version cannot be deleted. Only versions with a higher number than the currently active one can take effect. Please enter carefully.
+Click **Add Version**, enter the agreement version number, and click **Confirm.** Note: Once added, an agreement version cannot be deleted. Only versions with a higher number than the currently active one can take effect. Please enter carefully.
 
 ![Screenshot](/img/docs/LNARbnXNjoqa7Uxz4gQcx2f1nad.png)
 
@@ -351,7 +359,7 @@ After creating a hardware product, its network provisioning method must be confi
 
 There are three network provisioning entry methods:
 
-1. **Provisioning Home – Bluetooth Provisioning:** When the device is reset and powered on, and Bluetooth is enabled on the App, the device can be detected in the Bluetooth device area of the provisioning page.
+1. **Provisioning Home – Bluetooth Provisioning:** When the device is reset and powered on, and Bluetooth is enabled on the App, the device can be detected in the Bluetooth device area of the provisioning page (as shown below).
 
 ![Screenshot](/img/docs/DRtxb6e6GoXNXzxIaHRcNFHDn5b.png)
 
@@ -577,8 +585,62 @@ On the Product Knowledge Base page, click **Edit** to manage the corresponding k
 
 - In the pop-up window, select the appropriate **refund method** and/or **service cancellation method** according to the business requirements, then confirm the operation.
 
+#### 2.4.5 Device Management
+
+##### 2.4.5.1 Unbind Device
+
+Navigation Path: [Product] – [Device Manage]
+
+The platform provides multiple methods for unbinding devices:
+
+**When Unbinding a Small Number of Devices**
+
+Enter the UUID(s) of the device(s) to be unbound (multiple UUIDs can be separated by commas " , "). Remove the restriction on the first activation time, then click Search.
+
+![Screenshot](/img/docs/Kr7NbvKrio0L00xYARxcT2FXnYb.png)
+
+Based on the search results, you can:
+- Unbind directly on the current page (This function is only available when the device status is "Bound").
+
+![Screenshot](/img/docs/Bz3ebRMHnoyaDUxAwCicln9rnUe.png)
+
+- Select and unbind specific devices on the current page.
+
+![Screenshot](/img/docs/G66yb3bnAoVXK2xmy2bcLynzn5b.png)
+
+- View device details in the [Device After Sales] Page and then unbind.
+
+![Screenshot](/img/docs/Die5bAxyXoidqCxmKbGcej42ncd.png)
+
+![Screenshot](/img/docs/CDVobUBZco55Xtx6777c0HuTn3n.png)
+
+**When Unbinding a Large Number of Devices**
+
+On the [Device Manage] page, click Batch Operations -> Device Unbinding. (This method has no upper limit on the number of devices that can be processed.)
+
+![Screenshot](/img/docs/VH07bUP5bo3ZMVxHRlicTjClnRd.png)
+
+First method for entering device UUIDs: Enter the UUIDs directly into the text box, separated by line breaks.
+
+![Screenshot](/img/docs/KTGWbV7PQokw1zxcKjxc2woAndf.png)
+
+Second method for entering device UUIDs: Download the import template, fill in the UUIDs of the devices to be processed, and then upload the file.
+
+![Screenshot](/img/docs/Frr3bilFPoFDVUx0E9LcG4tjnkf.png)
+
+(Template Preview)
+
+![Screenshot](/img/docs/YKHvbiuvSoYWilxgKcScFBv5ndf.png)
+
+Click Confirm to unbind the devices.
+
 ## Appendix
 
 ### 3.1 History
 
-> 📊 *表格内容 - 请参考飞书原文档*
+| Version | Date | Author | Description |
+|---------|------|--------|-------------|
+| v1.0.0 | 2024-01-15 | Platform Team | Initial release of Admin Manual |
+| v1.1.0 | 2024-03-20 | Platform Team | Added Cloud Storage Order Management section |
+| v1.2.0 | 2024-06-10 | Platform Team | Updated Device Management with batch unbind feature |
+| v1.3.0 | 2024-09-05 | Platform Team | Added Knowledge Base configuration guide |
