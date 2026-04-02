@@ -21,17 +21,21 @@ The DMP platform is a comprehensive platform serving hardware manufacturers with
 
 Before starting, understand the following core concepts:
 
-| Terminology | Explanation | Example |
-| :--- | :--- | :--- |
-| Category | In IoT platforms, refers to a collection of devices with identical functional definitions or application scenarios, serving as templates for product definitions | "Smart Bulb" defining common attributes like switch status/brightness |
-| Product | Specific device models or series under a category, with globally unique identifiers (PID). | A developer creates the "CS-6-AD Smart Bulb" product using the "Smart Bulb" category. |
-| Thing Model | A digital data model describing "what a device is, what it can do, and what it can notify." It standardizes device-cloud data interaction and includes three subtypes: Properties, Actions, and Events. | A "Smart AC" thing model may include: - Property: Current temperature (read/write), operating mode (read/write). - Action: Set fan speed (device-executable command). - Event: Filter replacement alert (device-initiated notification). |
-| Per-device Secret | A device authentication and key management scheme. Unique credentials (ID + secret) are pre-burned into each device during production for bidirectional authentication with the IoT platform. DMP uses Tuple for this purpose. | A factory burns a globally unique certificate into each smart door lock during production. |
-| Tuple | Generated after product creation. Each set contains unique identifiers and connection parameters for a device | - productId(PID): Unique product model ID (burn recommended). - deviceUuid: Unique device ID (must be burned). - deviceSecret: Device secret (must be burned). - qrCode: Short URL for QR code labeling (user scanning). - ngwDomain: Cloud platform entry address (shared across DMP). - deviceCode: Simplified logical ID (rarely used). |
-| OTA | Remote wireless updates (Wi-Fi/4G) for device firmware/software. DMP provides full OTA capabilities. Supported methods: - APP Upgrade: Manual: Users trigger upgrades via APP. - Automatic: Devices auto-check and upgrade periodically. - Silent OTA: Server pushes urgent updates without broadcasting notification tones. | When pushing firmware updates in bulk to deployed smart speakers—whether to fix bugs or introduce new features—OTA provides an efficient solution. |
-| Device Binding | Process of associating a device with a user account to grant remote control permissions via APP. | Binding methods: QR scanning, device ID input, Bluetooth and etc. |
-| Device Network Provisioning | Configuring a device's network settings (e.g., Wi-Fi SSID/password) to enable internet access and cloud communication. | Methods: Bluetooth, device hotspot and etc. |
-
+| Term | Explanation |
+|------|-------------|
+| DMP | Device Management Platform - A comprehensive platform serving hardware manufacturers with device management capabilities at its core |
+| Five-Tuple | The unique identity credentials for device connection including: productId (PID), deviceUuid, deviceSecret, qrCode, ngwDomain, and deviceCode |
+| PID | Product ID - The unique identifier of the product model |
+| APP | Application - The mobile application for end users to manage devices |
+| OTA | Over-The-Air - Firmware upgrade capability |
+| DP | Data Point - A single functional attribute of a device, also known as Thing Model function |
+| Standard Function | Pre-defined common functions for product categories, acting as a ready-to-use "standard library" |
+| Thing Model | The definition of device capabilities including properties, events, and actions |
+| Properties | Describe the real-time operating status of a device (Bool, Value, String, Enum, Float, Double, Date, Raw) |
+| Events | Describe specific events or alarms actively triggered by the device and reported to the platform |
+| Actions | Describe executable capabilities or methods of the device, issued by the platform |
+| Leaf Category | The lowest level category where products can be assigned (cannot have subcategories) |
+| Value-added Service | Additional paid services like cloud storage |
 
 ### 1.4 Quick Guide
 
@@ -54,6 +58,8 @@ If you find the content of this manual extensive and are unsure where to start, 
 - If you need to understand how to create products, configure firmware upgrades, or set up device settings menus:
   → Please contact the platform liaison and request the DMP Platform Developer Guide
 
+---
+
 ## Product Development on DMP Platform
 
 ### 2.0 How to Access to the Platform
@@ -71,10 +77,12 @@ Upon platform delivery, an initial administrator account is provided, along with
 #### 2.1.2 Account Information Collection
 
 **Required Information [Important]**
+
 - **Account Nickname** — Fill in according to customer requirements (in some ODM environments, account nicknames cannot include Chinese characters or Pinyin).
 - **Verification Email** — Used to receive verification codes. Note: In overseas ODM environments, domestic email domains (e.g., qq.com, 163.com, domestic corporate domains) are not allowed. Overseas domains such as Gmail are recommended.
 
 **Additional Information for Hardware Developers and Other External Collaborators**
+
 - Company Name
 - Company Address
 - Company Contact Person
@@ -82,37 +90,37 @@ Upon platform delivery, an initial administrator account is provided, along with
 
 #### 2.1.3 Create a New Account
 
-Navigation Path: **[Settings] – [Account Management]**
+**Navigation Path:** `[Settings] – [Account Management]`
 
-- Enter the account configuration page and click **Add Account**
+Enter the account configuration page and click **Add Account**
 
-![Screenshot](/img/docs/EiDCbE9dQo6E2DxInrBcxtIbn5g.png)
+![Add Account](/img/docs/EiDCbE9dQo6E2DxInrBcxtIbn5g.png)
 
-- Enter the account information, select the assigned role(s) (multiple selections allowed), and click **Confirm** to create the account.
+Enter the account information, select the assigned role(s) (multiple selections allowed), and click **Confirm** to create the account.
 
-Note: Email, phone number, and password can be modified by the user after logging in.
+**Note:** Email, phone number, and password can be modified by the user after logging in.
 
-![Screenshot](/img/docs/B2AXbfkxjolPO8xvCLTczj6Lnif.png)
+![Create Account](/img/docs/B2AXbfkxjolPO8xvCLTczj6Lnif.png)
 
-- Provide the platform login page domain, login account, and password to the relevant personnel.
+Provide the platform login page domain, login account, and password to the relevant personnel.
 
-- Account information can be managed on this page using the **Edit**, **Reset Password**, and **Delete** functions.
+Account information can be managed on this page using the **Edit**, **Reset Password**, and **Delete** functions.
 
 #### 2.1.4 Managing Role Permissions
 
-Navigation Path: [Settings] – [Role Management]
+**Navigation Path:** `[Settings] – [Role Management]`
 
-Note: **The initial roles are configured based on business best practices. It is recommended to keep them unchanged and only add new roles when necessary.**
+**Note:** The initial roles are configured based on business best practices. It is recommended to keep them unchanged and only add new roles when necessary.
 
-- Enter the role configuration page and click **New Role**.
+Enter the role configuration page and click **New Role**.
 
-![Screenshot](/img/docs/XgOVbTdXHoCcRRxpZevccP4rnfg.png)
+![New Role](/img/docs/XgOVbTdXHoCcRRxpZevccP4rnfg.png)
 
-- Enter the role name, then select the corresponding pages and functions based on the role definition.
+Enter the role name, then select the corresponding pages and functions based on the role definition.
 
-![Screenshot](/img/docs/FIpub4t0yodexnxviUvcsTXMnUn.png)
+![Role Permissions](/img/docs/FIpub4t0yodexnxviUvcsTXMnUn.png)
 
-- Roles can be managed on this page using the **Edit** and **Delete** functions.
+Roles can be managed on this page using the **Edit** and **Delete** functions.
 
 ### 2.2 Product Development Management
 
@@ -124,29 +132,29 @@ Based on business experience and market classification, the DMP management conso
 
 Subsequently, corresponding standard function libraries and configuration templates will be preset according to the characteristics of each category.
 
-When creating or editing product information, you can select the category to which the product belongs. This section introduces how to manage categories.
+When creating or editing product information, you can select the category to which the product belongs (as shown in the figure below). This section introduces how to manage categories.
 
-![Screenshot](/img/docs/JmVkbAP4WovTtdxjIotc5h6Infe.png)
+![Category Management](/img/docs/JmVkbAP4WovTtdxjIotc5h6Infe.png)
 
 ##### 2.2.1.2 Operation Manual
 
-Navigation Path: [Products] – [Category Management] – [Backend Categories]
+**Navigation Path:** `[Products] – [Category Management] – [Backend Categories]`
 
-Note: **The built-in product categories are accumulated based on industry and device development experience. It is recommended to avoid modifying existing categories and only add new categories when necessary.**
+**Note:** The built-in product categories are accumulated based on industry and device development experience. It is recommended to avoid modifying existing categories and only add new categories when necessary.
 
-- On the **Backend Categories** page, select **New Sub Item** or **Add A First Level Category** according to the level you want to manage.
+On the **Backend Categories** page, select **New Sub Item** or **Add A First Level Category** according to the level you want to manage.
 
-![Screenshot](/img/docs/JEjRbLE5woNBn6x8oTycFN4tnvc.png)
+![Add Category](/img/docs/JEjRbLE5woNBn6x8oTycFN4tnvc.png)
 
-- After entering the category name and other required information, you must specify whether the category is a *leaf node*.
+After entering the category name and other required information, you must specify whether the category is a *leaf node*.
 
-Note:
+**Note:**
 - For **non-leaf categories**, subcategories can be added, but products cannot be added.
 - For **leaf categories**, products can be added, but subcategories cannot be created.
 
-![Screenshot](/img/docs/E8N2bnQpVoKpfjxwL81czzE3nEA.png)
+![Leaf Category](/img/docs/E8N2bnQpVoKpfjxwL81czzE3nEA.png)
 
-- Categories can also be **edited** or **deleted** from this page.
+Categories can also be **edited** or **deleted** from this page.
 
 #### 2.2.2 Standard Function Management
 
@@ -158,7 +166,7 @@ When configuring a product, functions can only be selected from the standard fun
 
 We strongly recommend prioritizing the direct use of standard functions and adapting to customization needs by **adding new functions rather than modifying existing ones**. This approach is considered best practice for maintaining compatibility and efficiency. The standard function library will continue to be updated with future platform releases.
 
-Note: **Modifying the existed standard functions may cause related settings in the APP to become invalid or behave unexpectedly. Please fully evaluate the impact or confirm with technical support before making changes.**
+**Note:** Modifying the existed standard functions may cause related settings in the APP to become invalid or behave unexpectedly. Please fully evaluate the impact or confirm with technical support before making changes.
 
 ##### 2.2.2.2 Operation Manual
 
@@ -184,21 +192,23 @@ Standard functions describe the capability scope of a device and can be categori
 To reduce the learning curve for developers, the DMP platform has preloaded a standardized function list for each product category based on industry standards. Product functions are divided into two types:
 
 - **Mandatory Functions:** Common functions that all products under the same category must support. These cannot be removed, but some details can be edited.
+
 - **Optional Functions:** Special functions supported only by certain products within a category. Developers can choose to add or remove these based on the actual hardware capabilities, and some details can also be edited.
 
-Navigation Path: [Products] – [Standard Functions]
+**Navigation Path:** `[Products] – [Standard Functions]`
 
-- Click **Create Function**
+Click **Create Function**
 
-![Screenshot](/img/docs/FHd1boz3ToNL3YxEnjfczFA3nwd.png)
+![Create Function](/img/docs/FHd1boz3ToNL3YxEnjfczFA3nwd.png)
 
-- After filling in the function-related information, the function can be created successfully.
-  - Standard functions with **DP IDs starting with "1"** are defined by SDK developers. Other departments must not modify these functions.
-  - Once a standard function is created, it can be added to products.
-  - If a standard function has already been added to one or more products, some attributes and parameters become non-editable. To modify them, the function must first be unbound from all associated products.
-  - By clicking **Associated Products**, you can view which products currently include this standard function.
+After filling in the function-related information, the function can be created successfully.
 
-![Screenshot](/img/docs/B7H0b2JmGomSEtxRP4Vc9KqQnRc.png)
+- Standard functions with **DP IDs starting with "1"** are defined by SDK developers. Other departments must not modify these functions.
+- Once a standard function is created, it can be added to products.
+- If a standard function has already been added to one or more products, some attributes and parameters become non-editable. To modify them, the function must first be unbound from all associated products.
+- By clicking **Associated Products**, you can view which products currently include this standard function.
+
+![Function Details](/img/docs/B7H0b2JmGomSEtxRP4Vc9KqQnRc.png)
 
 #### 2.2.3 Hardware Product Development
 
@@ -211,35 +221,40 @@ For details, please refer to the **DMP Platform Developer Guide**.
 After creating a product, you can generate a **five-tuple** in the product details page. Each five-tuple represents the unique identity of a device and contains the essential information required for the device to connect and communicate with the platform. The elements are explained as follows:
 
 - **productId (PID):** The unique identifier of the product model. Devices under the same PID share the same function definitions (data model) and default product configuration. It is recommended to burn this value into the device.
+
 - **deviceUuid:** The unique identifier of the device, used to bind the device to an account or ID. This value must be burned into the device.
+
 - **deviceSecret:** The device secret key, required for authentication. This value must be burned into the device.
+
 - **qrCode:** A short device link used to generate a QR code, which is printed on a label for users to scan and add the device.
+
 - **ngwDomain:** The entry address for the device to connect to the cloud platform (Northbound Gateway). All devices within the same DMP environment share the same value.
+
 - **deviceCode:** A unique device identifier used at the business layer. It serves as a simplified logical identifier that implicitly maps to the other five parameters (used less frequently).
 
 ##### 2.2.4.2 Operation Manual
 
-Navigation Path: [Products] – [Product Development]
+**Navigation Path:** `[Products] – [Product Development]`
 
-- Click **Continue Development**
+Click **Continue Development**
 
-![Screenshot](/img/docs/YTKmbiiLAo3h5VxUqxjcoIpfnja.png)
+![Continue Development](/img/docs/YTKmbiiLAo3h5VxUqxjcoIpfnja.png)
 
-- Click the sub-tab [Mass Production] and select the **Generate Authorization Code**.
+Click the sub-tab [Mass Production] and select the **Generate Authorization Code**.
 
-![Screenshot](/img/docs/XdOHb5azcosn5KxqpRdc1rNPnFf.png)
+![Generate Auth Code](/img/docs/XdOHb5azcosn5KxqpRdc1rNPnFf.png)
 
-- Enter the number of authorization codes to be produced and the batch remarks, then click **Confirm**.
+Enter the number of authorization codes to be produced and the batch remarks, then click **Confirm**.
 
-![Screenshot](/img/docs/SRH9b64GZozR7dxHCwAcryavnnb.png)
+![Confirm Generation](/img/docs/SRH9b64GZozR7dxHCwAcryavnnb.png)
 
-- Wait for the five-tuples to be generated.
+Wait for the five-tuples to be generated.
 
-![Screenshot](/img/docs/EFv7bSkB3obYCxx7mL9c6vAOn0y.png)
+![Generating](/img/docs/EFv7bSkB3obYCxx7mL9c6vAOn0y.png)
 
-- Click **Export Authorization Code** to download the generated five-tuple file.
+Click **Export Authorization Code** to download the generated five-tuple file.
 
-![Screenshot](/img/docs/HZKgbYOYmoSk4LxsKtfcYgwAnNo.png)
+![Export Auth](/img/docs/HZKgbYOYmoSk4LxsKtfcYgwAnNo.png)
 
 #### 2.2.4 Hardware Product Firmware Upgrade
 
@@ -261,7 +276,7 @@ Therefore, the first step is to create and maintain an App entity in the managem
 
 Before creating a new App, please prepare the following information in advance, and then proceed to create the App entry in the management console.
 
-Required information for App creation:
+**Required information for App creation:**
 - App name
 - App logo image (PNG format, under 500 KB)
 - Android package name (provided by the App development team)
@@ -269,25 +284,29 @@ Required information for App creation:
 
 **Create an APP**
 
-Navigation Path: [APP] – [APP Management]
+**Navigation Path:** `[APP] – [APP Management]`
 
-- Click **Add APP**
+Click **Add APP**
 
-![Screenshot](/img/docs/FkyPbIXuSohEOax61hmckSjGnbd.png)
+![Add APP](/img/docs/FkyPbIXuSohEOax61hmckSjGnbd.png)
 
-- Fill in the prepared information from step-1 accordingly in the pop-up window and click **Confirm**.
+Fill in the prepared information from step-1 accordingly in the pop-up window and click **Confirm**.
 
-- After creating the APP, an APP Bound for the APP will be generated automatically, please provide APP bundle to APP developer for APP packing.
+![Create APP Form](/img/docs/X7vNbcfeto7pe5xPZzqcU42Gnbf.png)
 
-![Screenshot](/img/docs/JiHabI5ksoUHUMxOTExcRQkjn9g.png)
+After creating the APP, an APP Bound for the APP will be generated automatically, please provide APP bundle to APP developer for APP packing.
+
+![APP Bundle](/img/docs/JiHabI5ksoUHUMxOTExcRQkjn9g.png)
 
 #### 2.3.2 APP Configuration
 
-Navigation Path: [APP] – [APP Configuration]
+**Navigation Path:** `[APP] – [APP Configuration]`
 
-- Enter the page and click **Modify**
+Enter the page and click **Modify**
 
-- Fill in the setting and click **Save**.
+![APP Configuration](/img/docs/UlhDbFzfboMofgx7mazcbvUUnQ3.png)
+
+Fill in the setting and click **Save**.
 
 **Tips for filling:**
 - Whether Google Home is supported (Yes/No)
@@ -299,42 +318,40 @@ Navigation Path: [APP] – [APP Configuration]
 - Cloud marketplace service URL (provided by the HTML team)
 - Application agreement service URL (provided by the HTML team)
 
-![Screenshot](/img/docs/UlhDbFzfboMofgx7mazcbvUUnQ3.png)
-
 #### 2.3.3 APP List Configuration
 
-Navigation Path: [APP] – [APP Management] – [Publishing Configuration] / [APP] – [Publishing Configuration]
+**Navigation Path:** `[APP] – [APP Management] – [Publishing Configuration]` / `[APP] – [Publishing Configuration]`
 
-Entry 1: On the [APP] – [APP Management] page, click **Publishing Configuration** for the selected App.
+**Entry 1:** On the [APP] – [APP Management] page, click **Publishing Configuration** for the selected App.
 
-![Screenshot](/img/docs/LUHAbezO1oD8d5x25QWcYbrZnI8.png)
+![Publishing Config](/img/docs/LUHAbezO1oD8d5x25QWcYbrZnI8.png)
 
-Entry 2: On the [APP] – [Publishing Configuration] page, select the App from the dropdown menu at the top.
+**Entry 2:** On the [APP] – [Publishing Configuration] page, select the App from the dropdown menu at the top.
 
-![Screenshot](/img/docs/MxtGboyfhogXnpxBSuAcs7jWnpf.png)
+![Publishing Config 2](/img/docs/MxtGboyfhogXnpxBSuAcs7jWnpf.png)
 
 ##### 2.3.3.1 Agreement Configuration
 
 (User Agreement and Privacy Policy are configured in the same way, but managed on separate pages.)
 
 **a. Create a version:**
-Click **Add Version**, enter the agreement version number, and click **Confirm.** Note: Once added, an agreement version cannot be deleted. Only versions with a higher number than the currently active one can take effect. Please enter carefully.
+Click **Add Version**, enter the agreement version number, and click **Confirm**.
 
-![Screenshot](/img/docs/LNARbnXNjoqa7Uxz4gQcx2f1nad.png)
+**Note:** Once added, an agreement version cannot be deleted. Only versions with a higher number than the currently active one can take effect. Please enter carefully.
+
+![Add Version](/img/docs/LNARbnXNjoqa7Uxz4gQcx2f1nad.png)
 
 **b. Edit version content:**
 Select the language to be added, edit the title and content, and click **Save**.
-
 Without closing the dialog, select the next language and repeat the above steps. After all languages for the current version are completed and saved, close the dialog.
 
-![Screenshot](/img/docs/Gf3wbdIlLoAod0xp2ajcHh3Mn2f.png)
+![Edit Version](/img/docs/Gf3wbdIlLoAod0xp2ajcHh3Mn2f.png)
 
 **c. Enable the agreement:**
 Click **Enable** on the page to make the agreement effective (there may be a delay of up to 30 minutes).
-
 Before enabling, the agreement content can be reviewed and edited again. Once enabled, the agreement will be locked and cannot be modified.
 
-![Screenshot](/img/docs/GWpSbgHQIo6g7Wx0ekpcdJeonhf.png)
+![Enable Agreement](/img/docs/GWpSbgHQIo6g7Wx0ekpcdJeonhf.png)
 
 ##### 2.3.3.2 Push Certificate Configuration
 
@@ -349,9 +366,9 @@ The push certificate effectiveness mechanism differ between Android and iOS and 
 **iOS:**
 - The push certificate takes effect immediately after configuration. The certificate is valid for one year and must be renewed before expiration.
 
-![Screenshot](/img/docs/WSR0bU5grosZGVxMAx9cWQ1ynrc.png)
+![Push Certificate Android](/img/docs/WSR0bU5grosZGVxMAx9cWQ1ynrc.png)
 
-![Screenshot](/img/docs/WEXPbO2bWo7qkfxjqNwcEEDOnah.png)
+![Push Certificate iOS](/img/docs/WEXPbO2bWo7qkfxjqNwcEEDOnah.png)
 
 #### 2.3.4 Network Provisioning and Front-End Category Management
 
@@ -361,41 +378,44 @@ After creating a hardware product, its network provisioning method must be confi
 
 There are three network provisioning entry methods:
 
-1. **Provisioning Home – Bluetooth Provisioning:** When the device is reset and powered on, and Bluetooth is enabled on the App, the device can be detected in the Bluetooth device area of the provisioning page (as shown below).
+1. **Provisioning Home – Bluetooth Provisioning:**
+   When the device is reset and powered on, and Bluetooth is enabled on the App, the device can be detected in the Bluetooth device area of the provisioning page (as shown below).
 
-![Screenshot](/img/docs/DRtxb6e6GoXNXzxIaHRcNFHDn5b.png)
+   ![Bluetooth Provisioning](/img/docs/DRtxb6e6GoXNXzxIaHRcNFHDn5b.png)
 
 2. **Provisioning Home – Scan Device QR Code:** Tap the scan icon in the top-right corner of the provisioning page to scan the device QR code for provisioning.
 
-![Screenshot](/img/docs/UfU8bzi3VoDMXKxfZmtc3OUUnFb.png)
+   ![Scan QR](/img/docs/UfU8bzi3VoDMXKxfZmtc3OUUnFb.png)
 
 3. **Provisioning Home – Select Device Model:** Select the device model from the list to start provisioning.
 
-![Screenshot](/img/docs/QI59bNW2aopLc5xA9O1ckde2noh.png)
+   ![Select Model](/img/docs/QI59bNW2aopLc5xA9O1ckde2noh.png)
 
 Among these, Bluetooth direct provisioning does not require configuration in the DMP Management Console.
 
-The latter two methods require configuring the provisioning guide in the DMP console. The following section explains how to configure the second and third methods.
+The latter two methods require configuring the provisioning guide in the DMP console (as shown below). The following section explains how to configure the second and third methods.
+
+![Provisioning Guide](/img/docs/YUqQbvcApoZ2XfxIGN5cBbqMnAe.png)
 
 ##### 2.3.4.2 Operation Manual
 
 **Provisioning Home – Scan Device QR Code**
 
-Navigation Path: [Products] – [Product Development] – [Continue Development] – [Device Interaction] – [Configuration Instruction]
+**Navigation Path:** `[Products] – [Product Development] – [Continue Development] – [Device Interaction] – [Configuration Instruction]`
 
-- Ensure the product is currently in the **"In Development"** status. If the product is in **"Pre-release"** or **"Released"** status, you must first withdraw the release before editing the provisioning wizard.
+Ensure the product is currently in the **"In Development"** status. If the product is in **"Pre-release"** or **"Released"** status, you must first withdraw the release before editing the provisioning wizard.
 
-![Screenshot](/img/docs/DFxrbmFmkoiXjMx2G7fcGefvncg.png)
+![Product Status](/img/docs/DFxrbmFmkoiXjMx2G7fcGefvncg.png)
 
-- Configure and enable the wizard under "Device Interaction – Wizard Configuration" on the product details page.
+b. Configure and enable the wizard under "Device Interaction – Wizard Configuration" on the product details page.
 
-Note: PNG and GIF formats are supported. Each provisioning method configured requires clicking **Save** once.
+**Note:** PNG and GIF formats are supported. Each provisioning method configured requires clicking **Save** once.
 
-- After configuration, the product must be moved to **Pre-release** status for the settings to take effect.
+c. After configuration, the product must be moved to **Pre-release** status for the settings to take effect.
 
 **Provisioning Home – Select Device Model**
 
-Navigation: [Products] – [Category Management] – [Frontend Categories]
+**Navigation:** `[Products] – [Category Management] – [Frontend Categories]`
 
 Frontend categories correspond to the product list displayed on the App provisioning page. Level 1 categories are display-only and do not take effect.
 
@@ -403,31 +423,31 @@ Level 2 categorie act as product list tabs.
 
 The App supports up to four levels of categories, allowing leaf categories to be displayed at either the third or fourth level.
 
-Notes:
+**Notes:**
 - With the current design, configuring frontend categories for a product is equivalent to exposing the product model and images to App users. Please configure carefully.
 - Some frontend categories are pre-created at platform delivery based on existing product integrations. If you need to modify built-in configurations, it is recommended to consult the technical support team first.
 
-- Create a leaf category for the product
+Create a leaf category for the product
 
 To display a product in the App, you must first create a corresponding **leaf category** based on the product definition.
-
 In general, there is no need to create a new top-level category; required categories can be created by clicking **Add Sub Item**.
 
-![Screenshot](/img/docs/EcsXbCVvKolUd2xv9bicPd9QnXe.png)
+![Add Frontend Category](/img/docs/EcsXbCVvKolUd2xv9bicPd9QnXe.png)
 
-- After creating the corresponding frontend category, configure the provisioning wizard according to the product definition.
+After creating the corresponding frontend category, configure the provisioning wizard according to the product definition.
 
 Please note that the leaf category name must exactly match the product model name.
-
 Changes made here take effect immediately and **do not** require withdrawing the product release.
 
-![Screenshot](/img/docs/KCCybdINMoiTccxVYfFcS25mnhf.png)
+![Configure Wizard](/img/docs/KCCybdINMoiTccxVYfFcS25mnhf.png)
 
 #### 2.3.5 Cloud Storage Plan Configuration
 
 ##### 2.3.5.1 Section Overview
 
-The DMP Management Console supports configuring and publishing cloud storage plans. Once configured, these plans will be displayed in the App and available for users to purchase.
+The DMP Management Console supports configuring and publishing cloud storage plans. Once configured, these plans will be displayed in the App and available for users to purchase. (See example below)
+
+![Cloud Storage Example](/img/docs/BmmhbmOt3oj0T1xvOBlcE1Agnwc.png)
 
 The cloud storage plan configuration process consists of four steps:
 1. **Define cloud storage templates** (configure storage duration, cloud service provider, etc.)
@@ -439,41 +459,41 @@ The cloud storage plan configuration process consists of four steps:
 
 **Define cloud storage templates (storage duration, cloud provider, etc.)**
 
-Navigation Path: [Marketing] – [Value-added Services] – [Cloud Storage Templates]
+**Navigation Path:** `[Marketing] – [Value-added Services] – [Cloud Storage Templates]`
 
-![Screenshot](/img/docs/MWu6bnUkdowbtwxH3iScBFzJnuh.png)
+![Cloud Storage Templates](/img/docs/MWu6bnUkdowbtwxH3iScBFzJnuh.png)
 
 Create and manage templates in [Cloud Storage Templates] and define basic template information.
 
-![Screenshot](/img/docs/CREobmdFGofISGxkJZScyC7sn0c.png)
+![Create Template](/img/docs/CREobmdFGofISGxkJZScyC7sn0c.png)
 
 **Define cloud storage products (pricing, purchase limits, etc.)**
 
-Navigation: [Marketing] – [Value-added Services] – [Mall Management] – [Commodity Management]
+**Navigation:** `[Marketing] – [Value-added Services] – [Mall Management] – [Commodity Management]`
 
 Create products based on templates and define pricing and related details.
 
-![Screenshot](/img/docs/Qexbb03RGoQ0djxhPJRcRp3rnre.png)
+![Create Product](/img/docs/Qexbb03RGoQ0djxhPJRcRp3rnre.png)
 
-![Screenshot](/img/docs/ECewbg3sCobPvlxVmTwcxV2qnrf.png)
+![Product Details](/img/docs/ECewbg3sCobPvlxVmTwcxV2qnrf.png)
 
 **Define cloud storage product groups (for batch management)**
 
-Navigation: [Marketing] – [Value-added Services] – [Mall Management] – [Commodity Grouping]
+**Navigation:** `[Marketing] – [Value-added Services] – [Mall Management] – [Commodity Grouping]`
 
 Create product groups and associate multiple products for batch management.
 
-![Screenshot](/img/docs/IRjRbZrgzo6fDwx2tp3cwBdJn7e.png)
+![Product Groups](/img/docs/IRjRbZrgzo6fDwx2tp3cwBdJn7e.png)
 
-![Screenshot](/img/docs/GEy7bsZeuo7koFxkQlocKcoJnLg.png)
+![Product Groups 2](/img/docs/GEy7bsZeuo7koFxkQlocKcoJnLg.png)
 
 **Configure cloud storage shelves (publish products)**
 
-Navigation Path: [Marketing] – [Value-added Services] – [Mall Management] – [Product Shelves]
+**Navigation Path:** `[Marketing] – [Value-added Services] – [Mall Management] – [Product Shelves]`
 
 Select product groups, configure shelf placement, and complete publishing.
 
-![Screenshot](/img/docs/Iyq2bOsQsozwP7xSUKScn4RgnRe.png)
+![Product Shelves](/img/docs/Iyq2bOsQsozwP7xSUKScn4RgnRe.png)
 
 ### 2.4 Customer Relationship Management
 
@@ -481,9 +501,21 @@ Select product groups, configure shelf placement, and complete publishing.
 
 ##### 2.4.1.1 Section Overview
 
-The DMP Management Console supports configuring Frequently Asked Questions (FAQs) for both the App and different device models, helping reduce the workload of manual customer support.
+The DMP Management Console supports configuring Frequently Asked Questions (FAQs) for both the App and different device models, helping reduce the workload of manual customer support. (See entry points below)
 
-App Knowledge Base Entry and Device Knowledge Base Entry are available.
+**App Knowledge Base Entry:**
+
+![App KB Entry 1](/img/docs/DLJhb8tc2oPfjlxUbp5cj1bwncg.png)
+
+![App KB Entry 2](/img/docs/LA6ybKq6Mor8fPxEAo7c3Sh3nof.png)
+
+**Device Knowledge Base Entry:**
+
+![Device KB Entry 1](/img/docs/VHU7bDICaoHoSHxLDibc8c6Tnbd.png)
+
+![Device KB Entry 2](/img/docs/Zd3ZbvJK0omq9NxACmdcoqKCnEf.png)
+
+![Device KB Entry 3](/img/docs/Q0iebcBAhoHvVDx9RjqcXB4znhh.png)
 
 These built-in FAQs correspond to the [Knowledge Base] module in the DMP Management Console.
 
@@ -496,153 +528,160 @@ The operation steps and interfaces for both are largely similar. The following s
 **Create a Knowledge Base**
 
 Click **[Create Knowledge Base]** to create a new knowledge base.
-
 When creating a knowledge base, you can select the target App and language.
 
-![Screenshot](/img/docs/LGsKb1X96oYZnsxXnKgcUzm5nOb.png)
+![Create Knowledge Base](/img/docs/LGsKb1X96oYZnsxXnKgcUzm5nOb.png)
 
-![Screenshot](/img/docs/DdrUb07lhoHbrhxzREjcpDsHnuh.png)
+![Create Knowledge Base 2](/img/docs/DdrUb07lhoHbrhxzREjcpDsHnuh.png)
 
-Notes:
+**Notes:**
 - The associated App cannot be changed after creation.
 - Languages can still be added or modified after creation.
 
 **Create First-level Categories**
 
 Click **[Management Q&A]** to enter the **[App Q&A Management]** page.
-
 Then click **[Add First-level Category]** to create a top-level category.
 
-![Screenshot](/img/docs/CCbfbqn0foZe8vxeKoucifuwnnf.png)
+![Add Category](/img/docs/CCbfbqn0foZe8vxeKoucifuwnnf.png)
 
-![Screenshot](/img/docs/PxlobqEPUop0eWxCdtrcJ6Ngnyd.png)
+![Add Category 2](/img/docs/PxlobqEPUop0eWxCdtrcJ6Ngnyd.png)
 
 **Create Subcategories and Knowledge Articles**
 
 After creating a first-level category, you can either: Create second-level categories, or Add knowledge articles directly under the first-level category.
 
-Notes:
+**Notes:**
 1. Once knowledge articles are added under a first-level category, second-level categories can no longer be created under it.
 2. When adding knowledge articles, make sure to configure multiple languages. Each language requires clicking Save once.
 
-![Screenshot](/img/docs/NEPUbenCAooCfPxmoztc1LDfnjg.png)
+![Add Subcategory](/img/docs/NEPUbenCAooCfPxmoztc1LDfnjg.png)
 
-![Screenshot](/img/docs/MrThbxGDVo1dH4xAYiwcBS38n9c.png)
+![Add Article](/img/docs/MrThbxGDVo1dH4xAYiwcBS38n9c.png)
 
 **Manage Knowledge Articles**
 
 After adding knowledge articles, they can be managed via the operation column:
+
 - **Publish**: After editing, click to publish the article to the production environment.
 - **Sort**: Click to customize the display order of articles within the category. Smaller numbers are displayed higher.
 
-![Screenshot](/img/docs/UiDQbkUhtocJPqxESTvcSLx8neh.png)
+![Manage Articles](/img/docs/UiDQbkUhtocJPqxESTvcSLx8neh.png)
 
-![Screenshot](/img/docs/SNJbbu8AsoGu1ixZrEdcNjmunzh.png)
+![Sort Articles](/img/docs/SNJbbu8AsoGu1ixZrEdcNjmunzh.png)
 
 **Product Knowledge Base Description**
 
 For **Published** products, a Product Knowledge Base is automatically created.
-
 On the Product Knowledge Base page, click **Edit** to manage the corresponding knowledge entries.
 
 #### 2.4.2 After-sales Management
 
-![Screenshot](/img/docs/CYZEbc8G5oAJZIxG5yzcSlvRnCv.png)
+![After-sales](/img/docs/CYZEbc8G5oAJZIxG5yzcSlvRnCv.png)
 
 #### 2.4.3 Push Management
 
 **Create Push Notifications**
 
-![Screenshot](/img/docs/NGNVbK10xo9qaKxyBUlcDOONnic.png)
+![Create Push](/img/docs/NGNVbK10xo9qaKxyBUlcDOONnic.png)
 
-![Screenshot](/img/docs/TCjmbcd1MogyrAx0dC4c7JP0nwd.png)
+![Push List](/img/docs/TCjmbcd1MogyrAx0dC4c7JP0nwd.png)
 
-![Screenshot](/img/docs/PQx4blFr0oDirrx5N9Ec6ncGngK.png)
+![Push Detail](/img/docs/PQx4blFr0oDirrx5N9Ec6ncGngK.png)
 
-![Screenshot](/img/docs/FsA2b24pyo8CYXx8Q9YcQnkendh.png)
+![Push Target](/img/docs/FsA2b24pyo8CYXx8Q9YcQnkendh.png)
 
 **Push Review**
 
-![Screenshot](/img/docs/IJlFbYXgcocqVkxGjxicc49bnK9.png)
+![Push Review](/img/docs/IJlFbYXgcocqVkxGjxicc49bnK9.png)
 
 **Target Audience Management**
 
-![Screenshot](/img/docs/MDJMb125Do7XkcxtOu9cOhman1e.png)
+![Audience List](/img/docs/MDJMb125Do7XkcxtOu9cOhman1e.png)
 
 **Create Audience**
 
-![Screenshot](/img/docs/RIQmbcRicoEYA3xGPrscVNblnFg.png)
+![Create Audience](/img/docs/RIQmbcRicoEYA3xGPrscVNblnFg.png)
 
 **Edit Audience**
 
-![Screenshot](/img/docs/RcDZb5AdEopBUDxlIGJcEbtDntg.png)
+![Edit Audience](/img/docs/RcDZb5AdEopBUDxlIGJcEbtDntg.png)
 
 #### 2.4.4 Cloud Storage Order Management
 
 ##### 2.4.4.1 Order/Service Cancellation
 
-- On the **[Marketing] - [Mall Manage] - [Commodity Order]** page, use the search bar at the top to locate the order by entering the Order ID, User ID, or other information.
+On the **[Marketing] - [Mall Manage] - [Commodity Order]** page, use the search bar at the top to locate the order by entering the Order ID, User ID, or other information.
 
-- In the corresponding order row, click the **[Unsubscribe]** button to trigger the cancellation pop-up window.
+![Order Search](/img/docs/Nnr9bUJJKoyhf3xUToAcjk9cnVd.png)
 
-- In the pop-up window, select the appropriate **refund method** and/or **service cancellation method** according to the business requirements, then confirm the operation.
+In the corresponding order row, click the **[Unsubscribe]** button to trigger the cancellation pop-up window.
+
+![Unsubscribe](/img/docs/W37Db51sbojU7XxnR3EcgQ6Un0b.png)
+
+In the pop-up window, select the appropriate **refund method** and/or **service cancellation method** according to the business requirements, then confirm the operation.
+
+![Refund Method](/img/docs/CVMWb1p8moQR75xda0pcKt03nog.png)
 
 #### 2.4.5 Device Management
 
 ##### 2.4.5.1 Unbind Device
 
-Navigation Path: [Product] – [Device Manage]
+**Navigation Path:** `[Product] – [Device Manage]`
 
 The platform provides multiple methods for unbinding devices:
 
 **When Unbinding a Small Number of Devices**
 
-Enter the UUID(s) of the device(s) to be unbound (multiple UUIDs can be separated by commas " , "). Remove the restriction on the first activation time, then click Search.
+Enter the UUID(s) of the device(s) to be unbound (multiple UUIDs can be separated by commas " , "). Remove the restriction on the first activation time, then click **Search**.
 
-![Screenshot](/img/docs/Kr7NbvKrio0L00xYARxcT2FXnYb.png)
+![Device Search](/img/docs/Kr7NbvKrio0L00xYARxcT2FXnYb.png)
 
 Based on the search results, you can:
-- Unbind directly on the current page (This function is only available when the device status is "Bound").
+- **Unbind directly on the current page** (This function is only available when the device status is "Bound").
 
-![Screenshot](/img/docs/Bz3ebRMHnoyaDUxAwCicln9rnUe.png)
+  ![Unbind Direct](/img/docs/Bz3ebRMHnoyaDUxAwCicln9rnUe.png)
 
 - Select and unbind specific devices on the current page.
 
-![Screenshot](/img/docs/G66yb3bnAoVXK2xmy2bcLynzn5b.png)
+  ![Select Unbind](/img/docs/G66yb3bnAoVXK2xmy2bcLynzn5b.png)
 
-- View device details in the [Device After Sales] Page and then unbind.
+- View device details in the **[Device After Sales]** Page and then unbind.
 
-![Screenshot](/img/docs/Die5bAxyXoidqCxmKbGcej42ncd.png)
+  ![Device After Sales](/img/docs/Die5bAxyXoidqCxmKbGcej42ncd.png)
 
-![Screenshot](/img/docs/CDVobUBZco55Xtx6777c0HuTn3n.png)
+  ![Device After Sales 2](/img/docs/CDVobUBZco55Xtx6777c0HuTn3n.png)
 
 **When Unbinding a Large Number of Devices**
 
-On the [Device Manage] page, click Batch Operations -> Device Unbinding. (This method has no upper limit on the number of devices that can be processed.)
+On the **[Device Manage]** page, click **Batch Operations -> Device Unbinding**. (This method has no upper limit on the number of devices that can be processed.)
 
-![Screenshot](/img/docs/VH07bUP5bo3ZMVxHRlicTjClnRd.png)
+![Batch Unbind](/img/docs/VH07bUP5bo3ZMVxHRlicTjClnRd.png)
 
-First method for entering device UUIDs: Enter the UUIDs directly into the text box, separated by line breaks.
+**First method for entering device UUIDs:** Enter the UUIDs directly into the text box, separated by line breaks.
 
-![Screenshot](/img/docs/KTGWbV7PQokw1zxcKjxc2woAndf.png)
+![Batch UUID Entry](/img/docs/KTGWbV7PQokw1zxcKjxc2woAndf.png)
 
-Second method for entering device UUIDs: Download the import template, fill in the UUIDs of the devices to be processed, and then upload the file.
+**Second method for entering device UUIDs:** Download the import template, fill in the UUIDs of the devices to be processed, and then upload the file.
 
-![Screenshot](/img/docs/Frr3bilFPoFDVUx0E9LcG4tjnkf.png)
+![Import Template](/img/docs/Frr3bilFPoFDVUx0E9LcG4tjnkf.png)
 
 (Template Preview)
 
-![Screenshot](/img/docs/YKHvbiuvSoYWilxgKcScFBv5ndf.png)
+![Template Preview](/img/docs/YKHvbiuvSoYWilxgKcScFBv5ndf.png)
 
-Click Confirm to unbind the devices.
+Click **Confirm** to unbind the devices.
+
+---
 
 ## Appendix
 
 ### 3.1 History
 
-| Date | Version | Description | Meantainer |
-| :--- | :--- | :--- | :--- |
-| 2026-01-24 | V 0.1 | Trial version | Silvia |
-| 2026-02-25 | V 0.5 | Update Unsubcription Guide | Silvia |
-| 2026-03-26 | V 0.6 | Update APP Management Guide | Silvia |
-| 2026-04-02 | V 0.7 | Update Device Unbind Guide | Silvia |
+| Version | Date | Updates |
+|---------|------|---------|
+| 1.0.0 | 2024-01-01 | Initial release of DMP Platform Admin Manual |
+| 1.1.0 | 2024-03-15 | Added cloud storage configuration section (2.3.5) |
+| 1.2.0 | 2024-06-20 | Updated device management features (2.4.5) |
+| 1.3.0 | 2024-09-10 | Added push management documentation (2.4.3) |
+| 1.4.0 | 2025-01-01 | Major platform update with new UI and features |
