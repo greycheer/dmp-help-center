@@ -180,7 +180,7 @@ After creation, you must click **Release** to put the firmware version into a re
 
 **Firmware versions must be created strictly in version order. Even if an OTA task is delivered to a device, the device will only upgrade to a firmware version that is higher than its current local version.**
 
-**For how to enable upgrades using maintained firmware versions, please refer to the <Product Firmware Management> section.**
+**For how to enable upgrades using maintained firmware versions, please refer to the "Product Firmware Management" section.**
 
 ---
 
