@@ -34,6 +34,8 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
+          // 禁用自动生成侧边栏，完全使用手动配置
+          sidebarItemsGenerator: async () => [],
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
