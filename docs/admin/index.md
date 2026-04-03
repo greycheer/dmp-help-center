@@ -8,10 +8,10 @@ sidebar_label: Admin Manual
 ## Chapters
 
 ### 1. Introduction
-- [1. Introduction](./1-introduction)
+- [1. Introduction](./introduction)
 
 ### 2. Product Development on DMP Platform
-- [2.0 How to Access to the Platform](./2-0-access)
+- [2.0 How to Access to the Platform](./access-guide)
 
 #### 2.1 Platform Account and Role Management
 - [2.1.1 Section Overview](./2-1-1-section-overview)
