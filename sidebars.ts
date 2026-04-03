@@ -1,5 +1,13 @@
 import type {SidebarsConfig} from '@docusaurus/plugin-content-docs';
 
+/**
+ * 修复说明：
+ * Docusaurus 自动生成的锚点ID格式：
+ * - 标题 "1.1 Purpose" 生成 "11-purpose-of-the-manual"（去除点号）
+ * - 标题 "2.0 How to Access" 生成 "20-how-to-access-to-the-platform"
+ * 所有锚点ID都移除了点号之间的分隔符
+ */
+
 const sidebars: SidebarsConfig = {
   tutorialSidebar: [
     {
@@ -28,8 +36,38 @@ const sidebars: SidebarsConfig = {
           items: [
             {
               type: 'link',
+              label: '2.0 How to Access',
+              href: '/dmp-help-center/docs/admin/#20-how-to-access-to-the-platform',
+            },
+            {
+              type: 'link',
               label: '2.1 Platform Account and Role Management',
               href: '/dmp-help-center/docs/admin/#21-platform-account-and-role-management',
+            },
+            {
+              type: 'link',
+              label: '2.1.1 Section Overview',
+              href: '/dmp-help-center/docs/admin/#211-section-overview',
+            },
+            {
+              type: 'link',
+              label: '2.1.2 Account Information Collection',
+              href: '/dmp-help-center/docs/admin/#212-account-information-collection',
+            },
+            {
+              type: 'link',
+              label: '2.1.3 Create a New Account',
+              href: '/dmp-help-center/docs/admin/#213-create-a-new-account',
+            },
+            {
+              type: 'link',
+              label: '2.1.4 Managing Role Permissions',
+              href: '/dmp-help-center/docs/admin/#214-managing-role-permissions',
+            },
+            {
+              type: 'link',
+              label: '2.2 Product Development Management',
+              href: '/dmp-help-center/docs/admin/#22-product-development-management',
             },
             {
               type: 'link',
@@ -53,7 +91,7 @@ const sidebars: SidebarsConfig = {
             },
             {
               type: 'link',
-              label: '2.2.5 Hardware Product Firmware Upgrade',
+              label: '2.2.5 Firmware Upgrade',
               href: '/dmp-help-center/docs/admin/#225-hardware-product-firmware-upgrade',
             },
           ],
@@ -70,6 +108,16 @@ const sidebars: SidebarsConfig = {
             },
             {
               type: 'link',
+              label: '3.1.1 Section Overview',
+              href: '/dmp-help-center/docs/admin/#2311-section-overview',
+            },
+            {
+              type: 'link',
+              label: '3.1.2 Operation Manual',
+              href: '/dmp-help-center/docs/admin/#2312-operation-manual',
+            },
+            {
+              type: 'link',
               label: '3.2 APP Configuration',
               href: '/dmp-help-center/docs/admin/#232-app-configuration',
             },
@@ -80,22 +128,22 @@ const sidebars: SidebarsConfig = {
             },
             {
               type: 'link',
-              label: '3.4 Agreement Configuration',
+              label: '3.3.1 Agreement Configuration',
               href: '/dmp-help-center/docs/admin/#2331-agreement-configuration',
             },
             {
               type: 'link',
-              label: '3.5 Push Certificate Configuration',
+              label: '3.3.2 Push Certificate Configuration',
               href: '/dmp-help-center/docs/admin/#2332-push-certificate-configuration',
             },
             {
               type: 'link',
-              label: '3.6 Network Provisioning and Front-End Category',
+              label: '3.4 Network Provisioning',
               href: '/dmp-help-center/docs/admin/#234-network-provisioning-and-front-end-category-management',
             },
             {
               type: 'link',
-              label: '3.7 Cloud Storage Plan Configuration',
+              label: '3.5 Cloud Storage Plans',
               href: '/dmp-help-center/docs/admin/#235-cloud-storage-plan-configuration',
             },
           ],
@@ -109,6 +157,16 @@ const sidebars: SidebarsConfig = {
               type: 'link',
               label: '4.1 Knowledge Base Configuration',
               href: '/dmp-help-center/docs/admin/#241-knowledge-base-configuration',
+            },
+            {
+              type: 'link',
+              label: '4.1.1 Section Overview',
+              href: '/dmp-help-center/docs/admin/#2411-section-overview',
+            },
+            {
+              type: 'link',
+              label: '4.1.2 Operation Manual',
+              href: '/dmp-help-center/docs/admin/#2412-operation-manual',
             },
             {
               type: 'link',
@@ -127,15 +185,25 @@ const sidebars: SidebarsConfig = {
             },
             {
               type: 'link',
+              label: '4.4.1 Order/Service Cancellation',
+              href: '/dmp-help-center/docs/admin/#2441-orderservice-cancellation',
+            },
+            {
+              type: 'link',
               label: '4.5 Device Management',
               href: '/dmp-help-center/docs/admin/#245-device-management',
+            },
+            {
+              type: 'link',
+              label: '4.5.1 Unbind Device',
+              href: '/dmp-help-center/docs/admin/#2451-unbind-device',
             },
           ],
         },
         {
           type: 'link',
           label: 'Appendix: History',
-          href: '/dmp-help-center/docs/admin/#appendix',
+          href: '/dmp-help-center/docs/admin/#31-history',
         },
       ],
     },
@@ -161,27 +229,27 @@ const sidebars: SidebarsConfig = {
             {
               type: 'link',
               label: '2.1 Product Development',
-              href: '/dmp-help-center/docs/developer/#2-product-development',
+              href: '/dmp-help-center/docs/developer/#21-product-development',
             },
             {
               type: 'link',
-              label: '2.2 Product Firmware Management',
-              href: '/dmp-help-center/docs/developer/#21-product-firmware-management',
+              label: '2.2.1 Product Firmware Management',
+              href: '/dmp-help-center/docs/developer/#221-product-firmware-management',
             },
             {
               type: 'link',
-              label: '2.3 Device Interaction',
+              label: '2.2 Device Interaction',
               href: '/dmp-help-center/docs/developer/#22-device-interaction',
             },
             {
               type: 'link',
-              label: '2.4 Product Display',
-              href: '/dmp-help-center/docs/developer/#23-product-display',
+              label: '2.2.1 Product Display',
+              href: '/dmp-help-center/docs/developer/#221-product-display',
             },
             {
               type: 'link',
-              label: '2.5 Functional Grouping',
-              href: '/dmp-help-center/docs/developer/#24-functional-grouping',
+              label: '2.2.2 Functional Grouping',
+              href: '/dmp-help-center/docs/developer/#222-functional-grouping',
             },
           ],
         },
@@ -192,18 +260,8 @@ const sidebars: SidebarsConfig = {
           items: [
             {
               type: 'link',
-              label: '3.1 Firmware Repository Management',
-              href: '/dmp-help-center/docs/developer/#3-firmware-management',
-            },
-            {
-              type: 'link',
-              label: '3.2 Firmware Versions',
-              href: '/dmp-help-center/docs/developer/#31-firmware-repository-management',
-            },
-            {
-              type: 'link',
-              label: '3.3 OTA Upgrade Tasks',
-              href: '/dmp-help-center/docs/developer/#32-ota-upgrade-tasks',
+              label: '3.1 Firmware Repository',
+              href: '/dmp-help-center/docs/developer/#23-firmware-management',
             },
           ],
         },
@@ -215,12 +273,12 @@ const sidebars: SidebarsConfig = {
             {
               type: 'link',
               label: '4.1 FAQ',
-              href: '/dmp-help-center/docs/developer/#appendix-faq',
+              href: '/dmp-help-center/docs/developer/#31-faq',
             },
             {
               type: 'link',
               label: '4.2 History',
-              href: '/dmp-help-center/docs/developer/#appendix-history',
+              href: '/dmp-help-center/docs/developer/#32-history',
             },
           ],
         },
