@@ -9,16 +9,19 @@ Welcome to the **DMP Platform Developer Manual**. This documentation provides a 
 
 ## Chapters
 
-### 2.1 Product Development
-- [2.1 Product Development](./2-1-intro)
+### 1. Introduction
+- [1. Introduction](./intro)
 
-### 2.2 Product Features
-- [2.2.1 Product Firmware Management](./2-2-1-firmware-management)
-- [2.2.2 Product Display](./2-2-2-product-display)
-- [2.2.3 Functional Grouping](./2-2-3-functional-grouping)
+### 2. Product Development
+- [2.1 Product Development](./2-1-product-development)
+- [2.2 Device Interaction](./2-2-device-interaction)
+- [2.2.1 Product Display](./2-2-1-product-display-full)
+- [2.2.2 Functional Grouping](./2-2-2-functional-grouping-full)
+- [2.3 Firmware Management](./2-3-firmware-management)
 
-### Appendix
-- [Appendix - FAQ and Version History](./appendix)
+### 3. Appendix
+- [3.1 FAQ](./3-1-faq)
+- [3.2 History](./3-2-history)
 
 ---
 

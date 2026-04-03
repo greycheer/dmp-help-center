@@ -63,6 +63,11 @@ const sidebars: SidebarsConfig = {
             'admin/2-4-5-device-management',
           ],
         },
+        {
+          type: 'doc',
+          id: 'admin/3-1-history',
+          label: '3.1 History',
+        },
       ],
     },
     {
@@ -80,20 +85,39 @@ const sidebars: SidebarsConfig = {
           label: '1. Introduction',
         },
         {
-          type: 'category',
-          label: '2. Product Development',
-          collapsed: true,
-          items: [
-            'developer/2-1-intro',
-            'developer/2-2-1-firmware-management',
-            'developer/2-2-2-product-display',
-            'developer/2-2-3-functional-grouping',
-          ],
+          type: 'doc',
+          id: 'developer/2-1-product-development',
+          label: '2.1 Product Development',
         },
         {
           type: 'doc',
-          id: 'developer/appendix',
-          label: 'Appendix',
+          id: 'developer/2-2-device-interaction',
+          label: '2.2 Device Interaction',
+        },
+        {
+          type: 'doc',
+          id: 'developer/2-2-1-product-display-full',
+          label: '2.2.1 Product Display',
+        },
+        {
+          type: 'doc',
+          id: 'developer/2-2-2-functional-grouping-full',
+          label: '2.2.2 Functional Grouping',
+        },
+        {
+          type: 'doc',
+          id: 'developer/2-3-firmware-management',
+          label: '2.3 Firmware Management',
+        },
+        {
+          type: 'doc',
+          id: 'developer/3-1-faq',
+          label: '3.1 FAQ',
+        },
+        {
+          type: 'doc',
+          id: 'developer/3-2-history',
+          label: '3.2 History',
         },
       ],
     },
