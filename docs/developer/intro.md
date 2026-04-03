@@ -1,4 +1,8 @@
----\nsidebar_position: 1\nsidebar_label: 1. Introduction\n---\n\n
+---
+sidebar_position: 1
+sidebar_label: 1. Introduction
+---
+
 ## Introduction
 
 ### 1.1 Purpose of the Manual
@@ -46,5 +50,3 @@ The DMP platform does not support self-service account creation. Please provide 
 **Personal Info:**
 - Account Nickname — Fill in according to customer requirements (in some ODM environments, account nicknames cannot include Chinese characters or Pinyin).
 - Verification Email — Used to receive verification codes. Note: In overseas ODM environments, domestic email domains (e.g., qq.com, 163.com, domestic corporate domains) are not allowed. Overseas domains such as Gmail are recommended.
-
----
